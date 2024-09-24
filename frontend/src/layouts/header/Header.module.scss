@@ -14,6 +14,10 @@
   justify-content: space-between;
 }
 
+.burger {
+  cursor: pointer;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -41,5 +45,32 @@
     padding-left: 1rem;
     padding-right: 1rem;
     color: #6c757d;
+  }
+}
+
+.menu {
+  display: grid;
+  gap: 16px;
+}
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid white;
+  i {
+    cursor: pointer;
+    justify-content: flex-end;
+  }
+}
+
+.menuItems {
+  padding: 0 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.menuItem {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
   }
 }
