@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Header.module.scss";
+import Weather from "../../sections/weather/Weather";
 
 const links = ["المغرب", "فن", , "اقتصاد", "رياضة", "تقارير", "سياحة", "فيديو"];
 export default function Header() {
@@ -18,7 +19,9 @@ export default function Header() {
             <span className={index && styles.link}>{element}</span>
           ))}
         </div>
-        <p>جيم بوست</p>
+        <p>
+          <Weather />
+        </p>
       </div>
     </div>
   );
