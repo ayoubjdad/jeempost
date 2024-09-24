@@ -1,0 +1,13 @@
+.outlined,
+.contained {
+  border: 1px solid;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 60px;
+  font-size: 12px;
+}
+
+.contained {
+  border: none;
+  background-color: #dee2e6;
+}

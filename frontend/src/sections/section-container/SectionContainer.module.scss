@@ -1,0 +1,15 @@
+.main {
+  gap: 32px;
+  display: grid;
+  height: fit-content;
+}
+
+.title {
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  hr {
+    width: 100%;
+  }
+}

@@ -1,0 +1,35 @@
+.main {
+  gap: 24px;
+  height: 160px;
+  display: grid;
+  padding: 16px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  align-content: space-between;
+}
+
+.tag,
+.time {
+  color: white;
+  gap: 6px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+}
+
+.tag {
+  color: white;
+  padding: 1px 10px;
+  border-radius: 30px;
+  background-color: red;
+}
+
+.title {
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  &:hover {
+    text-decoration: underline;
+  }
+}

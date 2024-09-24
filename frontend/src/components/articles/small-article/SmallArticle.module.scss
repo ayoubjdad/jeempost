@@ -1,0 +1,44 @@
+.main {
+  gap: 24px;
+  display: flex;
+}
+
+.tag,
+.author,
+.time {
+  gap: 6px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+}
+
+.tag {
+  color: red;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.text {
+  display: grid;
+  gap: 10px;
+}
+
+.title {
+  cursor: pointer;
+  font-weight: 700;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.description {
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: 400;
+}

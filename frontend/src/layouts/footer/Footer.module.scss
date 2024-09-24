@@ -1,0 +1,30 @@
+.main {
+  color: white;
+  background-color: #031a46;
+}
+
+.container {
+  display: grid;
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.top {
+  display: flex;
+  padding: 24px 0;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1c3f58;
+}
+
+.text,
+.brands {
+  gap: 16px;
+  display: flex;
+}
+
+.bottom {
+  width: 100%;
+  padding: 24px 0;
+  text-align: center;
+}

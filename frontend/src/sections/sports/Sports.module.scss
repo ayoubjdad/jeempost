@@ -1,0 +1,52 @@
+.main {
+  width: 100%;
+}
+
+.container {
+  margin: 16px auto;
+  max-width: 1180px;
+}
+
+.games {
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.teamLogo {
+  width: 32px;
+  padding: 8px;
+  cursor: pointer;
+  transition: 500ms;
+  border-radius: 60px;
+  border: 1px solid #dee2e6;
+  &:hover {
+    background-color: #f7f7f7;
+  }
+}
+
+.sections {
+  gap: 16px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.middleSection,
+.leftSection {
+  div:nth-child(1) {
+    // padding: 16px 0;
+    // border-bottom: 1px dashed #dee2e6;
+  }
+}
+
+.middleSection {
+  padding: 0 16px;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+}

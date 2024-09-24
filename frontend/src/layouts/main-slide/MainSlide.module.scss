@@ -1,0 +1,32 @@
+.main {
+  gap: 24px;
+  height: 80vh;
+  padding: 0 80px 80px 80px;
+  display: grid;
+  background-size: cover;
+  background-position: center;
+  align-content: flex-end;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url("https://www.assahifa.com/wp-content/uploads/2024/09/taboun-macroun.jpg");
+}
+
+.mainSlide {
+  padding: 24px 0;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  //   p {
+  color: white;
+  //   }
+}
+
+.title {
+  width: 70%;
+  color: white;
+  font-size: 36px;
+  line-height: 150%;
+  //   width: -webkit-fill-available;
+  text-shadow: 6px 6px 16px black;
+}

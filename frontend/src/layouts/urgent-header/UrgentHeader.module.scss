@@ -1,0 +1,21 @@
+.main {
+  top: 0;
+  z-index: 1019;
+  color: white;
+  position: sticky;
+  background-color: #c70d06;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.urgent {
+  padding: 8px 180px 8px 16px;
+  background-color: #ab0b05;
+}
+
+.title {
+  padding: 8px 16px 8px 180px;
+}

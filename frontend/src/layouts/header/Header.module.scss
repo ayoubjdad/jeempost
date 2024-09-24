@@ -1,0 +1,45 @@
+.main {
+  top: 0;
+  z-index: 1020;
+  color: white;
+  position: sticky;
+  background-color: #031a46;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1180px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  img {
+    width: 120px;
+  }
+}
+
+.links {
+  font-weight: 300;
+  display: flex;
+  span {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.link {
+  &::before {
+    content: "|";
+    color: #1c3f58;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: #6c757d;
+  }
+}

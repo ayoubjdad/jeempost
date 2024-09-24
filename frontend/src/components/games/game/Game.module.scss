@@ -1,0 +1,25 @@
+.main {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #dee2e6;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 38px;
+}
+
+.tournament {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tournamentLogo {
+  width: 18px;
+}
+
+.time {
+  font-weight: 600;
+}

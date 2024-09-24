@@ -1,0 +1,44 @@
+.main {
+  gap: 10px;
+  // width: 300px;
+  display: grid;
+}
+
+.tag,
+.author,
+.time {
+  gap: 6px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+}
+
+.tag {
+  color: red;
+  // padding: 6px 10px;
+  // width: fit-content;
+  // border-radius: 4px;
+  // background-color: #dee2e6;
+}
+
+.image {
+  width: 100%;
+  height: 192px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.title {
+  cursor: pointer;
+  font-weight: 700;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.description {
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: 400;
+}
