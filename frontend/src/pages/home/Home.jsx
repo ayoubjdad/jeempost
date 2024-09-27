@@ -13,6 +13,11 @@ import MainSlide from "../../layouts/main-slide/MainSlide";
 import SideArticle from "../../components/articles/side-article/SideArticle";
 import Videos from "../../sections/videos/Videos";
 import Sports from "../../sections/sports/Sports";
+import { categories } from "../../data/Categories";
+import Ad728x90 from "../../layouts/ads/728x90/Ad728x90";
+import Ad300x250 from "../../layouts/ads/300x250/Ad300x250";
+import { Button } from "@mui/material";
+import ReadMore from "../../components/read-more/ReadMore";
 
 const options = {
   refetchOnWindowFocus: false,
@@ -36,15 +41,24 @@ export default function Home() {
       <MainSlide posts={posts?.results?.slice(0, 5)} />
       <div className={styles.container}>
         <div className={styles.sections}>
-          {/* <Game /> */}
-          <div style={{ display: "flex", gap: "16px" }}>
-            {posts?.results?.slice(0, 10)?.map(() => (
-              <Tag title="مباشر" />
+          <Ad728x90 />
+
+          <div className={styles.tags}>
+            {categories.map((category) => (
+              <Tag title={category.name} />
             ))}
           </div>
+
           <div className={styles.sectionsGrid}>
             <div className={styles.sections}>
-              <SectionContainer title="آخر الأخبار">
+              <SectionContainer
+                title="آخر الأخبار"
+                readMore
+                style={{
+                  display: "grid",
+                  gap: "32px",
+                }}
+              >
                 <div
                   style={{
                     display: "grid",
@@ -52,7 +66,7 @@ export default function Home() {
                     gridTemplateColumns: "1fr 1fr 1fr",
                   }}
                 >
-                  {posts?.results?.slice(0, 9)?.map((article, index) => (
+                  {posts?.results?.slice(0, 6)?.map((article, index) => (
                     <MainArticle key={index} article={article} />
                   ))}
                 </div>
@@ -72,7 +86,7 @@ export default function Home() {
                   ))}
                 </div>
               </SectionContainer>
-              <SectionContainer title="اقتصاد">
+              <SectionContainer title="اقتصاد" readMore>
                 <div
                   style={{
                     display: "grid",
@@ -85,7 +99,7 @@ export default function Home() {
                   ))}
                 </div>
               </SectionContainer>
-              <SectionContainer title="المغرب">
+              <SectionContainer title="المغرب" readMore>
                 <div
                   style={{
                     display: "grid",
@@ -100,6 +114,7 @@ export default function Home() {
               </SectionContainer>
             </div>
             <div className={styles.sections}>
+              <Ad300x250 />
               <SectionContainer title="الأكثر قراءة">
                 <div
                   style={{
@@ -124,7 +139,7 @@ export default function Home() {
         <div className={styles.sections}>
           <div className={styles.sectionsGrid}>
             <div className={styles.sections}>
-              <SectionContainer title="فن">
+              <SectionContainer title="فن" readMore>
                 <div
                   style={{
                     display: "grid",
@@ -133,7 +148,11 @@ export default function Home() {
                   }}
                 >
                   {posts?.results?.slice(0, 7)?.map((article, index) => (
-                    <SmallArticle key={index} article={article} /> // Passing the article as a prop
+                    <SmallArticle
+                      key={index}
+                      article={article}
+                      withDescription
+                    /> // Passing the article as a prop
                   ))}
                 </div>
               </SectionContainer>

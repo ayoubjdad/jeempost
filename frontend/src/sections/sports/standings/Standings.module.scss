@@ -1,0 +1,44 @@
+.container {
+  display: grid;
+}
+
+.header,
+.team {
+  display: grid;
+  padding: 0 8px;
+  grid-template-columns: 1fr 1fr 4fr 1fr 1fr;
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.header {
+  background-color: #dee2e6;
+  font-size: 8px;
+  padding: 8px;
+}
+
+.team {
+  padding: 4px 8px;
+  &:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
+}
+
+.teamName {
+  cursor: pointer;
+  justify-content: flex-start !important;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.played {
+  font-weight: 300;
+}
+
+.logo {
+  width: 20px;
+}

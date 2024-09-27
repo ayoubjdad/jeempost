@@ -3,7 +3,7 @@
 }
 
 .container {
-  margin: 16px auto;
+  margin: 32px auto;
   max-width: 1180px;
 }
 
@@ -17,4 +17,17 @@
 .sectionsGrid {
   gap: 32px;
   grid-template-columns: 3fr 1fr;
+}
+
+.tags {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.readMore {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

@@ -3,7 +3,7 @@
   z-index: 1020;
   color: white;
   position: sticky;
-  background-color: #031a46;
+  background-color: #040463;
 }
 
 .container {
@@ -41,7 +41,6 @@
 .link {
   &::before {
     content: "|";
-    color: #1c3f58;
     padding-left: 1rem;
     padding-right: 1rem;
     color: #6c757d;

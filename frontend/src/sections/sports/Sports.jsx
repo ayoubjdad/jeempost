@@ -7,6 +7,7 @@ import { gamesUrl, standingsUrl } from "../../api/data";
 import Game from "../../components/games/game/Game";
 import Tag from "../../components/tag/Tag";
 import MainArticle from "../../components/articles/main-article/MainArticle";
+import Standings from "./standings/Standings";
 
 const options = {
   refetchOnWindowFocus: false,
@@ -50,7 +51,8 @@ export default function Sports({ articles }) {
       <div className={styles.container}>
         <SectionContainer
           title="رياضة"
-          style={{ gap: "16px", display: "grid" }}
+          readMore
+          style={{ gap: "32px", display: "grid" }}
         >
           <div className={styles.games}>
             {games?.slice(0, 4)?.map((game) => (
@@ -67,18 +69,22 @@ export default function Sports({ articles }) {
             ))}
           </div>
           <div className={styles.sections}>
-            <div>
-              <MainArticle article={articles?.[0]} />
+            <div className={styles.rightSection}>
+              <MainArticle article={articles?.[0]} withoutDate />
+              <div className={styles.smallSection}>
+                <MainArticle article={articles?.[4]} withoutDate />
+                <MainArticle article={articles?.[5]} withoutDate />
+              </div>
             </div>
             <div className={styles.middleSection}>
               <MainArticle article={articles?.[1]} withoutImage withoutDate />
+              <hr />
               <MainArticle article={articles?.[2]} withoutImage withoutDate />
+              <hr />
               <MainArticle article={articles?.[2]} withoutImage withoutDate />
-              <MainArticle article={articles?.[3]} withoutImage withoutDate />
             </div>
             <div className={styles.leftSection}>
-              <MainArticle article={articles?.[4]} withoutDate />
-              <MainArticle article={articles?.[5]} withoutDate />
+              <Standings standings={standings} />
             </div>
           </div>
         </SectionContainer>

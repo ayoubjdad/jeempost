@@ -37,11 +37,23 @@
   grid-template-columns: 2fr 1fr 1fr;
 }
 
-.middleSection,
-.leftSection {
-  div:nth-child(1) {
-    // padding: 16px 0;
-    // border-bottom: 1px dashed #dee2e6;
+.rightSection {
+  display: grid;
+  gap: 16px;
+}
+
+.smallSection {
+  display: flex;
+  gap: 16px;
+}
+
+.middleSection {
+  gap: 16px;
+  display: grid;
+  hr {
+    width: 100%;
+    border: none;
+    border-bottom: 1px dashed #dee2e6;
   }
 }
 

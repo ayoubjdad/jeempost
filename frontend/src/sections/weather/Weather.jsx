@@ -17,12 +17,23 @@ const fetchWeather = async () => {
 export default function Weather() {
   const { data: weather } = useQuery("weather", fetchWeather, options);
 
+  const date = new Date(Date.now());
+
+  // Convert to Arabic locale
+  const arabicDate = date.toLocaleDateString("ar-MA", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className={styles.main}>
       <p>{weather?.data?.name}</p>
+      <p>|</p>
       <p>{weather?.data?.temp?.now}</p>
       <p>|</p>
-      <p>{weather?.data?.description}</p>
+      <p>{arabicDate}</p>
     </div>
   );
 }

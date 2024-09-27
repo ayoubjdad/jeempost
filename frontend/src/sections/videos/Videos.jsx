@@ -9,6 +9,7 @@ export default function Videos({ articles }) {
       <div className={styles.container}>
         <SectionContainer
           title="فيديوهات"
+          readMore
           style={{
             gap: "16px",
             display: "grid",
