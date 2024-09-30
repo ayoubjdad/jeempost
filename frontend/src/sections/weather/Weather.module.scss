@@ -5,3 +5,15 @@
   font-weight: 300;
   align-items: center;
 }
+
+@media (max-width: 575.98px) {
+  .main {
+    display: grid;
+  }
+
+  .separator,
+  .city,
+  .temp {
+    display: none;
+  }
+}

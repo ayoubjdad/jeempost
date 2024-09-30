@@ -80,9 +80,7 @@ export default function Header() {
             <span className={index && styles.link}>{element}</span>
           ))}
         </div>
-        <p>
-          <Weather />
-        </p>
+        <Weather />
       </div>
     </div>
   );

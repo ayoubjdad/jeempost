@@ -29,11 +29,11 @@ export default function Weather() {
 
   return (
     <div className={styles.main}>
-      <p>{weather?.data?.name}</p>
-      <p>|</p>
-      <p>{weather?.data?.temp?.now}</p>
-      <p>|</p>
-      <p>{arabicDate}</p>
+      <p className={styles.city}>{weather?.data?.name}</p>
+      <p className={styles.separator}>|</p>
+      <p className={styles.temp}>{weather?.data?.temp?.now}</p>
+      <p className={styles.separator}>|</p>
+      <p className={styles.date}>{arabicDate}</p>
     </div>
   );
 }

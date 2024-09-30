@@ -73,3 +73,13 @@
     text-decoration: underline;
   }
 }
+
+@media (max-width: 575.98px) {
+  .main {
+    padding: 0 20px;
+  }
+
+  .links {
+    display: none;
+  }
+}
