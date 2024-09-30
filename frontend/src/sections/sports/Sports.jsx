@@ -59,7 +59,7 @@ export default function Sports({ articles }) {
               <Game game={game} />
             ))}
           </div>
-          {/* <div className={styles.teams}>
+          <div className={styles.teams}>
             {standings?.[0]?.rows?.map(({ team }) => (
               <img
                 className={styles.teamLogo}
@@ -67,7 +67,7 @@ export default function Sports({ articles }) {
                 alt=""
               />
             ))}
-          </div> */}
+          </div>
           <div className={styles.sections}>
             <div className={styles.rightSection}>
               <MainArticle article={articles?.[0]} withoutDate />
