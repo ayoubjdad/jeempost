@@ -39,5 +39,58 @@ export const theme = createTheme({
         },
       },
     },
+
+    // * TextField
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: "0px",
+        },
+        input: {
+          fontFamily: "Alexandria",
+          padding: "8px 10px",
+          fontSize: "14px",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
+    },
+    MuiInputBase: {
+      root: { padding: 0 },
+    },
+
+    // * Autocomplete
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          width: "100% !important",
+          // backgroundColor: "lightgray",
+        },
+        inputRoot: {
+          padding: "0px",
+          "& .MuiOutlinedInput-root": {
+            padding: "0px",
+          },
+        },
+        popupIndicator: {
+          // color: "blue",
+        },
+        paper: {
+          // Style for the dropdown menu
+          backgroundColor: "lightblue",
+        },
+        option: {
+          color: "black",
+          '&[aria-selected="true"]': {
+            backgroundColor: "lightgreen", // Highlight selected option
+          },
+        },
+      },
+    },
   },
 });

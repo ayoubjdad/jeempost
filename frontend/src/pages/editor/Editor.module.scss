@@ -1,0 +1,35 @@
+.main {
+  //   background-color: #040463;
+  margin: 40px 0;
+}
+
+.container {
+  gap: 32px;
+  display: grid;
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.editorContainer {
+  gap: 32px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.editor {
+  gap: 16px;
+  display: grid;
+  height: fit-content;
+}
+
+.params {
+  gap: 16px;
+  display: grid;
+  height: fit-content;
+}
+
+.param {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1.5fr;
+}

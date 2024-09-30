@@ -4,6 +4,7 @@ import Header from "./layouts/header/Header";
 import Footer from "./layouts/footer/Footer";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./themes/overrides";
+import Editor from "./pages/editor/Editor";
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -14,6 +15,8 @@ export default function App() {
         <Header />
         <Home />
         <Footer />
+
+        <Editor />
       </ThemeProvider>
     </QueryClientProvider>
   );
