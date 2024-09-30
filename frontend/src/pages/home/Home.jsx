@@ -41,7 +41,7 @@ export default function Home() {
       <MainSlide posts={posts?.results?.slice(0, 5)} />
       <div className={styles.container}>
         <div className={styles.sections}>
-          <Ad728x90 />
+          {/* <Ad728x90 /> */}
 
           <div className={styles.tags}>
             {categories.map((category) => (
@@ -52,31 +52,16 @@ export default function Home() {
           <div className={styles.sectionsGrid}>
             <div className={styles.sections}>
               <SectionContainer
-                title="آخر الأخبار"
                 readMore
-                style={{
-                  display: "grid",
-                  gap: "32px",
-                }}
+                title="آخر الأخبار"
+                style={{ display: "grid", gap: "32px" }}
               >
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "16px",
-                    gridTemplateColumns: "1fr 1fr 1fr",
-                  }}
-                >
+                <div className={styles.section}>
                   {posts?.results?.slice(0, 6)?.map((article, index) => (
                     <MainArticle key={index} article={article} />
                   ))}
                 </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "16px",
-                    gridTemplateColumns: "1fr 1fr",
-                  }}
-                >
+                <div className={styles.detailsSection}>
                   {posts?.results?.slice(0, 5)?.map((article, index) => (
                     <SmallArticle
                       key={index}
@@ -87,33 +72,21 @@ export default function Home() {
                 </div>
               </SectionContainer>
               <SectionContainer title="اقتصاد" readMore>
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "16px",
-                    gridTemplateColumns: "1fr 1fr 1fr",
-                  }}
-                >
+                <div className={styles.section}>
                   {posts?.results?.slice(0, 3)?.map((article, index) => (
                     <MainArticle key={index} article={article} />
                   ))}
                 </div>
               </SectionContainer>
               <SectionContainer title="المغرب" readMore>
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "16px",
-                    gridTemplateColumns: "1fr 1fr 1fr",
-                  }}
-                >
+                <div className={styles.section}>
                   {posts?.results?.slice(0, 5)?.map((article, index) => (
                     <ArticleWithBackground key={index} article={article} />
                   ))}
                 </div>
               </SectionContainer>
             </div>
-            <div className={styles.sections}>
+            <div className={`${styles.sections} ${styles.smallSection}`}>
               <Ad300x250 />
               <SectionContainer title="الأكثر قراءة">
                 <div
@@ -140,24 +113,18 @@ export default function Home() {
           <div className={styles.sectionsGrid}>
             <div className={styles.sections}>
               <SectionContainer title="فن" readMore>
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "16px",
-                    gridTemplateColumns: "1fr 1fr",
-                  }}
-                >
+                <div className={styles.section}>
                   {posts?.results?.slice(0, 7)?.map((article, index) => (
                     <SmallArticle
                       key={index}
                       article={article}
                       withDescription
-                    /> // Passing the article as a prop
+                    />
                   ))}
                 </div>
               </SectionContainer>
             </div>
-            <div className={styles.sections}>
+            <div className={`${styles.sections} ${styles.smallSection}`}>
               <SectionContainer title="الأكثر قراءة">
                 <div
                   style={{

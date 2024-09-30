@@ -62,3 +62,23 @@
   border-left: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
 }
+
+@media (max-width: 575.98px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .games,
+  .sections {
+    grid-template-columns: 1fr;
+  }
+
+  .smallSection {
+    display: grid;
+  }
+
+  .middleSection {
+    padding: 0;
+    border: none;
+  }
+}

@@ -8,3 +8,19 @@
   margin: 0 auto;
   max-width: 1180px;
 }
+
+.section {
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding: 40px 20px;
+  }
+
+  .section {
+    grid-template-columns: 1fr;
+  }
+}
