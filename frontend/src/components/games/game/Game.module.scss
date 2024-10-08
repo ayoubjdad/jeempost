@@ -1,9 +1,22 @@
 .main {
   padding: 16px;
   display: flex;
+  border-radius: 6px;
   align-items: center;
   border: 1px solid #dee2e6;
   justify-content: space-between;
+}
+
+.team {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  p {
+    // max-width: 38px;
+    font-size: 10px;
+    text-align: center;
+    line-height: normal;
+  }
 }
 
 .logo {
@@ -22,4 +35,5 @@
 
 .time {
   font-weight: 600;
+  font-size: 16px;
 }

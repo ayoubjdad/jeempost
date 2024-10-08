@@ -14,7 +14,9 @@ export default function SmallArticle({ key, article }) {
           <p className={styles.time}>23 شتنبر 2024</p>
         </div>
         <p className={styles.title}>{headline}</p>
-        <p className={styles.description}>{content?.slice(0, 60)}...</p>
+        {content && (
+          <p className={styles.description}>{content?.slice(0, 60)}...</p>
+        )}
       </div>
     </div>
   );

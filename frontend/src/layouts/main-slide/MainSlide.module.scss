@@ -38,10 +38,13 @@
 .title {
   width: 70%;
   color: white;
+  cursor: pointer;
   font-size: 36px;
   line-height: 150%;
-  //   width: -webkit-fill-available;
   text-shadow: 6px 6px 16px black;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 575.98px) {

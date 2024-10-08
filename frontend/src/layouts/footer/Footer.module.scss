@@ -21,6 +21,19 @@
 .brands {
   gap: 16px;
   display: flex;
+  cursor: pointer;
+  p {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.icon {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .bottom {

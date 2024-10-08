@@ -10,6 +10,16 @@
   max-width: 1180px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerButtons {
+  gap: 16px;
+  display: flex;
+}
+
 .editorContainer {
   gap: 32px;
   display: grid;
@@ -32,4 +42,8 @@
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 1.5fr;
+}
+
+.clearIcon {
+  font-size: 20px;
 }

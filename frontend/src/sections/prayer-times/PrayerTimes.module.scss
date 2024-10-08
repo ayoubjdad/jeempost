@@ -1,0 +1,24 @@
+.main {
+  display: grid;
+  gap: 6px;
+  //   grid-template-columns: repeat(5, 1fr);
+}
+
+.salat {
+  border-radius: 4px;
+  padding: 12px;
+  background-color: #f3f1f1;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+  // display: grid;
+  // text-align: center;
+}
+
+.time {
+  font-weight: 700;
+}
+
+.alias {
+  // font-size: 10px;
+}

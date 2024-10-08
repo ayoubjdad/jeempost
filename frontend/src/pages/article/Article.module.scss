@@ -1,0 +1,37 @@
+.main {
+  width: 100%;
+}
+
+.container {
+  gap: 32px;
+  display: grid;
+  margin: 32px auto;
+  max-width: 1180px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.article {
+  gap: 32px;
+  display: grid;
+  img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+}
+
+.articleDetails {
+  gap: 12px;
+  display: grid;
+  p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 175%;
+  }
+}
+
+.author {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 175%;
+}

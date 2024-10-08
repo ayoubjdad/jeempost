@@ -5,9 +5,9 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { gamesUrl, standingsUrl } from "../../api/data";
 import Game from "../../components/games/game/Game";
-import Tag from "../../components/tag/Tag";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import Standings from "./standings/Standings";
+import { tournamentsPriority } from "../../data/Tournaments";
 
 const options = {
   refetchOnWindowFocus: false,
@@ -21,11 +21,31 @@ const formatDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
+const filterGamesByPriority = (games) => {
+  try {
+    const newArray = [];
+    for (const tour of tournamentsPriority) {
+      const newGames = games.filter(
+        (item) => item.tournament.uniqueTournament.id === tour.id
+      );
+      if (newGames?.length) {
+        newArray.push(...newGames);
+      }
+    }
+
+    return newArray;
+  } catch (error) {
+    console.error("❌", error);
+    return {};
+  }
+};
+
 const fetchGames = async () => {
   try {
     const url = gamesUrl + formatDate(new Date(Date.now()));
     const response = await axios.get(url);
-    return response?.data?.events;
+
+    return filterGamesByPriority(response?.data?.events);
   } catch (error) {
     console.error("❌", error);
     return {};
@@ -55,17 +75,8 @@ export default function Sports({ articles }) {
           style={{ gap: "32px", display: "grid" }}
         >
           <div className={styles.games}>
-            {games?.slice(0, 4)?.map((game) => (
+            {games?.slice(0, 6)?.map((game) => (
               <Game game={game} />
-            ))}
-          </div>
-          <div className={styles.teams}>
-            {standings?.[0]?.rows?.map(({ team }) => (
-              <img
-                className={styles.teamLogo}
-                src={`https://api.sofascore.app/api/v1/team/${team.id}/image`}
-                alt=""
-              />
             ))}
           </div>
           <div className={styles.sections}>

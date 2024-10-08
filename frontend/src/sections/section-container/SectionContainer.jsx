@@ -3,13 +3,16 @@ import styles from "./SectionContainer.module.scss";
 import ReadMore from "../../components/read-more/ReadMore";
 
 export default function SectionContainer({
-  children,
   title,
-  readMore = false,
   style,
+  state,
+  children,
+  setState = () => {},
+  onLoadMore = () => {},
+  readMore = false,
 }) {
   return (
-    <div className={styles.main}>
+    <div className={styles.main} key={Math.random()}>
       <div className={styles.title}>
         {title && <h2>{title}</h2>}
         <hr />
@@ -18,6 +21,7 @@ export default function SectionContainer({
       {readMore && (
         <div className={styles.readMore}>
           <ReadMore
+            onClick={() => onLoadMore(state, setState)}
             text="اقرأ المزيد"
             endIcon={<i class="fi fi-rr-arrow-left" />}
           />

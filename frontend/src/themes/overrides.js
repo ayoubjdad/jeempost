@@ -77,19 +77,46 @@ export const theme = createTheme({
             padding: "0px",
           },
         },
-        popupIndicator: {
-          // color: "blue",
+        endAdornment: {
+          top: "auto",
+          height: "100%",
+          transform: "none",
         },
+        popupIndicator: {
+          padding: 0,
+          height: "100%",
+        },
+        // * Style for the dropdown menu
         paper: {
-          // Style for the dropdown menu
-          backgroundColor: "lightblue",
+          boxShadow: "none",
+          borderRadius: "4px",
+          // backgroundColor: "lightblue",
+          marginTop: "4px",
+          border: "1px solid #0000003b !important",
         },
         option: {
           color: "black",
+          fontSize: "14px",
+          fontFamily: "Alexandria",
           '&[aria-selected="true"]': {
             backgroundColor: "lightgreen", // Highlight selected option
           },
         },
+        listbox: {
+          // list-style: none;
+          // margin: 0;
+          // padding: 8px 0;
+          // max-height: 40vh;
+          // overflow: auto;
+          // position: relative;
+        },
+      },
+    },
+
+    // * Chip
+    MuiChip: {
+      styleOverrides: {
+        root: { fontFamily: "inherit", fontSize: "12px" },
       },
     },
   },

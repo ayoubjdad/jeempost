@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Header.module.scss";
 import Weather from "../../sections/weather/Weather";
 import { Box, Drawer, ThemeProvider } from "@mui/material";
 import { theme } from "../../themes/overrides";
-
-const links = ["المغرب", "فن", , "اقتصاد", "رياضة", "تقارير", "سياحة", "فيديو"];
+import { redirect, useNavigate } from "react-router";
+import { categories } from "../../data/Categories";
+import { CategoriesContext } from "../../context/CategoriesContext";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -19,28 +20,6 @@ export default function Header() {
     setOpen(open);
   };
 
-  const megaLinks = [
-    "افتتاحية",
-    "المغرب",
-    "الشرق الأوسط",
-    "تقارير",
-    "المغرب الكبير",
-    "اقتصاد",
-    "سياحة",
-    "رياضة",
-    "دولي",
-    "تحقيقات",
-    "حوارات",
-    "فيديو",
-    "منوعات",
-    "تكنولوجيا",
-    "آراء",
-    "بورتريه",
-    "استطلاع للرأي",
-    "اتصل بنا",
-    "قسم الإشهار",
-  ];
-
   const Menu = ({ onClose }) => {
     return (
       <div className={styles.menu}>
@@ -48,18 +27,33 @@ export default function Header() {
           <Box component="i" className="fi fi-br-cross" onClick={onClose} />
         </div>
         <div className={styles.menuItems}>
-          {megaLinks.map((element) => (
-            <p className={styles.menuItem}>{element}</p>
+          {categories.map((element) => (
+            <p className={styles.menuItem}>{element.name}</p>
           ))}
         </div>
       </div>
     );
   };
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/");
+  };
+
+  const { setCategory } = useContext(CategoriesContext);
+
+  const handleCategoryClick = (category) => {
+    setCategory(category.slug);
+    navigate(`/${category.slug}`);
+  };
+
+  const menuElements = categories.filter((category) => category.isMenu);
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <div className={styles.logo}>
+        <div className={styles.logoContainer}>
           <Box
             component="i"
             className={`fi fi-rr-bars-staggered ${styles.burger}`}
@@ -73,11 +67,18 @@ export default function Header() {
           <img
             src="https://www.assahifa.com/wp-content/themes/assahifa/assets/images/logo.png"
             alt=""
+            onClick={handleClick}
           />
+          {/* <p className={styles.logo}>جيم بوست</p> */}
         </div>
         <div className={styles.links}>
-          {links.map((element, index) => (
-            <span className={index && styles.link}>{element}</span>
+          {menuElements.map((element, index) => (
+            <span
+              className={index && styles.link}
+              onClick={() => handleCategoryClick(element)}
+            >
+              {element.name}
+            </span>
           ))}
         </div>
         <Weather />
