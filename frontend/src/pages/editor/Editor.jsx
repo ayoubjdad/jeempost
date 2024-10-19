@@ -8,6 +8,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
 import axios from "axios";
 import draftToHtml from "draftjs-to-html";
+import { newsUrl } from "../../api/config";
 
 const toolbar = {
   options: [
@@ -31,11 +32,19 @@ const Icon = ({ icon }) => (
 export default function Editor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [article, setArticle] = useState({
-    title: "العنوان",
-    content: "المحتوى",
-    category: "الصنف",
-    date: new Date().toLocaleDateString("en-GB"), // dd-mm-yyyy format
-    image: "https://picsum.photos/200/300",
+    id: "",
+    headline: "",
+    subHeadline: "",
+    category: "",
+    content: "",
+    date: Date.now(),
+    image: { src: "", srcset: "" },
+    url: "",
+    author: { name: "جيم بوست", profileUrl: "" },
+    location: "",
+    tags: [],
+    keywords: [],
+    comments: [],
   });
 
   const onEditorStateChange = (newEditorState) => {
@@ -49,23 +58,11 @@ export default function Editor() {
   };
 
   const onTitleChange = (e) => {
-    setArticle((prevState) => {
-      return { ...prevState, title: e.target.value };
-    });
-  };
-
-  const saveArticle = async () => {
-    const contentState = editorState.getCurrentContent();
-    const rawContent = convertToRaw(contentState);
-    const htmlContent = draftToHtml(rawContent);
-
-    const articleToSave = {
-      ...article,
-      content: htmlContent,
-    };
-
-    console.log(":::::: ~ article:", articleToSave);
-    // await axios.post(`${config.serverUrl}/articles`, articleToSave);
+    setArticle((prevState) => ({
+      ...prevState,
+      headline: e.target.value,
+      url: `news/19/10/2024/${e.target.value}`,
+    }));
   };
 
   // * Handle image upload
@@ -76,11 +73,33 @@ export default function Editor() {
       reader.onloadend = () => {
         setArticle((prevState) => ({
           ...prevState,
-          image: reader.result, // Base64 image URL
+          image: reader.result,
         }));
       };
-      reader.readAsDataURL(file); // Convert image to base64
+      reader.readAsDataURL(file);
     }
+  };
+
+  // * ==========================================================================
+  // * ==========================================================================
+
+  const saveArticle = async () => {
+    const contentState = editorState.getCurrentContent();
+    const rawContent = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContent);
+
+    const articleToSave = {
+      ...article,
+      id: Math.random().toString(36).substring(2, 30),
+      image: {
+        ...article.image,
+        src: "https://i1.hespress.com/wp-content/uploads/2022/12/agricole-agriculture.jpg",
+      },
+      content: htmlContent,
+    };
+
+    console.log(":::::: ~ article:", articleToSave);
+    await axios.post(`${newsUrl}/create`, articleToSave);
   };
 
   return (
@@ -139,18 +158,18 @@ export default function Editor() {
             <div className={styles.param}>
               <p>الصورة</p>
               <div className={styles.upload}>
-                <label htmlFor="upload-button" className={styles.uploadLabel}>
+                {/* <label htmlFor="upload-button" className={styles.uploadLabel}>
                   <span>حمل صورة</span>
                   <Box component="i" className="fi fi-rr-cloud-upload" />
-                </label>
+                </label> */}
 
-                <input
+                {/* <input
                   type="file"
                   id="upload-button"
                   accept="image/*"
                   style={{ display: "none" }}
                   onChange={handleImageUpload}
-                />
+                /> */}
               </div>
             </div>
 

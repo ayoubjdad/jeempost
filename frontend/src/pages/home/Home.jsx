@@ -14,20 +14,20 @@ import { categories } from "../../data/Categories";
 import PrayerTimes from "../../sections/prayer-times/PrayerTimes";
 import Tags from "../../layouts/tags/Tags";
 import { CategoriesContext } from "../../context/CategoriesContext";
-import { serverUrl } from "../../api/config";
-import { newsUrl } from "../../api/data";
+import { newsUrl, serverUrl } from "../../api/config";
 
 const options = {
   refetchOnWindowFocus: false,
   retry: false,
 };
 const fetchNews = async () => {
-  const response = await axios.get(newsUrl, {
-    headers: {
-      "x-rapidapi-key": "87705006f3mshfe19f4c4fb732fdp1f49e3jsnf93da7793083",
-      "x-rapidapi-host": "arabic-news-api.p.rapidapi.com",
-    },
-  });
+  const response = await axios.get(newsUrl);
+  // const response = await axios.get(newsUrl, {
+  //   headers: {
+  //     "x-rapidapi-key": "87705006f3mshfe19f4c4fb732fdp1f49e3jsnf93da7793083",
+  //     "x-rapidapi-host": "arabic-news-api.p.rapidapi.com",
+  //   },
+  // });
   return response.data;
 };
 

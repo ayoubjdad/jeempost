@@ -2,9 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const userRoutes = require("./routes/users");
-const articlesRoutes = require("./routes/articles");
-const invoiceRoutes = require("./routes/invoices");
+const newsRoutes = require("./routes/news");
+// const invoiceRoutes = require("./routes/invoices");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,9 +25,8 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB", err));
 
-// app.use("/users", userRoutes);
-app.use("/articles", articlesRoutes);
-app.use("/invoices", invoiceRoutes);
+app.use("/news", newsRoutes);
+// app.use("/invoices", invoiceRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
