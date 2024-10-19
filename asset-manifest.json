@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/jeempost/static/css/main.af650ab7.css",
-    "main.js": "/jeempost/static/js/main.51385bba.js",
-    "static/js/453.d855a71b.chunk.js": "/jeempost/static/js/453.d855a71b.chunk.js",
-    "index.html": "/jeempost/index.html",
-    "main.af650ab7.css.map": "/jeempost/static/css/main.af650ab7.css.map",
-    "main.51385bba.js.map": "/jeempost/static/js/main.51385bba.js.map",
-    "453.d855a71b.chunk.js.map": "/jeempost/static/js/453.d855a71b.chunk.js.map"
+    "main.css": "/jeempost/frontend/static/css/main.af650ab7.css",
+    "main.js": "/jeempost/frontend/static/js/main.f1b9aa9c.js",
+    "static/js/453.d855a71b.chunk.js": "/jeempost/frontend/static/js/453.d855a71b.chunk.js",
+    "index.html": "/jeempost/frontend/index.html",
+    "main.af650ab7.css.map": "/jeempost/frontend/static/css/main.af650ab7.css.map",
+    "main.f1b9aa9c.js.map": "/jeempost/frontend/static/js/main.f1b9aa9c.js.map",
+    "453.d855a71b.chunk.js.map": "/jeempost/frontend/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.af650ab7.css",
-    "static/js/main.51385bba.js"
+    "static/js/main.f1b9aa9c.js"
   ]
 }
