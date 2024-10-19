@@ -1,25 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Home.module.scss";
-import { gamesUrl, newsUrl } from "../../api/data";
 import { useQuery } from "react-query";
 import axios from "axios";
 import ArticleWithBackground from "../../components/articles/article-with-background/ArticleWithBackground";
 import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import MainArticle from "../../components/articles/main-article/MainArticle";
-import Game from "../../components/games/game/Game";
 import SectionContainer from "../../sections/section-container/SectionContainer";
 import MainSlide from "../../layouts/main-slide/MainSlide";
 import SideArticle from "../../components/articles/side-article/SideArticle";
 import Videos from "../../sections/videos/Videos";
 import Sports from "../../sections/sports/Sports";
 import { categories } from "../../data/Categories";
-import Ad728x90 from "../../layouts/ads/728x90/Ad728x90";
-import Ad300x250 from "../../layouts/ads/300x250/Ad300x250";
-import { Button, Chip } from "@mui/material";
-import ReadMore from "../../components/read-more/ReadMore";
 import PrayerTimes from "../../sections/prayer-times/PrayerTimes";
 import Tags from "../../layouts/tags/Tags";
 import { CategoriesContext } from "../../context/CategoriesContext";
+import { serverUrl } from "../../api/config";
+import { newsUrl } from "../../api/data";
 
 const options = {
   refetchOnWindowFocus: false,
@@ -43,56 +39,47 @@ export default function Home() {
     fetchNews,
     options
   );
-  const [lastNews, setLastNews] = useState(posts?.results?.slice(0, 6));
-
-  useEffect(() => {
-    if (!postsLoading) {
-      setLastNews(posts?.results?.slice(0, 6));
-    }
-  }, [postsLoading]);
-
-  const onLoadMore = (state, setState) => {
-    const dataLength = state?.length;
-    setState((currentData) => {
-      const result = [
-        ...currentData,
-        ...posts?.results?.slice(dataLength, dataLength + 6),
-      ];
-      return result;
-    });
-  };
+  const [lastNews, setLastNews] = useState(posts?.results?.slice(0, 12));
 
   return (
     <div className={styles.main}>
       <MainSlide posts={posts?.results?.slice(0, 5)} />
       <div className={styles.container}>
         <div className={styles.sections}>
-          <div className={styles.sectionsGrid}>
-            <div className={styles.sections}>
+          <div
+            className={styles.sectionsGrid}
+            style={{ gridTemplateColumns: "1fr" }}
+          >
+            <div
+              className={styles.sections}
+              style={{ gridTemplateColumns: "1fr" }}
+            >
               <Tags list={categories} onClick={setCategory} />
-
-              <SectionContainer
-                readMore
-                title="آخر الأخبار"
-                style={{ display: "grid", gap: "32px" }}
-                onLoadMore={onLoadMore}
-                state={lastNews}
-                setState={setLastNews}
-              >
-                <div className={styles.section}>
-                  {lastNews?.map((article, index) => (
+              <SectionContainer title="آخر الأخبار" readMore>
+                <div
+                  className={styles.section}
+                  style={{
+                    gridTemplateColumns: "repeat(4,1fr)",
+                  }}
+                >
+                  {posts?.results?.slice(0, 12)?.map((article, index) => (
                     <MainArticle key={index} article={article} />
                   ))}
                 </div>
               </SectionContainer>
-              <SectionContainer title="اقتصاد">
+            </div>
+          </div>
+
+          <div className={styles.sectionsGrid}>
+            <div className={styles.sections}>
+              <SectionContainer title="اقتصاد" readMore>
                 <div className={styles.section}>
                   {posts?.results?.slice(0, 6)?.map((article, index) => (
                     <MainArticle key={index} article={article} />
                   ))}
                 </div>
               </SectionContainer>
-              <SectionContainer title="المغرب">
+              <SectionContainer title="المغرب" readMore>
                 <div className={styles.section}>
                   {posts?.results?.slice(0, 6)?.map((article, index) => (
                     <ArticleWithBackground key={index} article={article} />

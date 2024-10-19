@@ -64,12 +64,14 @@ export default function Header() {
               <Menu onClose={toggleDrawer(false)} />
             </Drawer>
           </ThemeProvider>
-          <img
+          {/* <img
             src="https://www.assahifa.com/wp-content/themes/assahifa/assets/images/logo.png"
             alt=""
             onClick={handleClick}
-          />
-          {/* <p className={styles.logo}>جيم بوست</p> */}
+          /> */}
+          <p className={styles.logo} onClick={handleClick}>
+            جيم بوست
+          </p>
         </div>
         <div className={styles.links}>
           {menuElements.map((element, index) => (

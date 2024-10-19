@@ -2,8 +2,7 @@ import React from "react";
 import styles from "./SideArticle.module.scss";
 
 export default function SideArticle({ article, index }) {
-  const { headline, underHeadline, content, date, image, url, imagesSrcset } =
-    article;
+  const { headline } = article;
 
   return (
     <div key={index} className={styles.main}>

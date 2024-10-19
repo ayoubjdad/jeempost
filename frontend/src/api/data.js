@@ -1,4 +1,5 @@
 export const newsUrl = "https://arabic-news-api.p.rapidapi.com/aljazeera";
+// export const newsUrl = "http://localhost:3000";
 
 export const gamesUrl =
   "https://www.sofascore.com/api/v1/sport/football/scheduled-events/";
