@@ -15,3 +15,32 @@ export const convertTimestampToDate = (timestamp) => {
   ).padStart(2, "0")}-${date.getFullYear()}`;
   return formattedDate;
 };
+
+// * Convert this 2024-10-19T15:17:25.174Z to this 19 أكتوبر 2024 - 15:17
+export function convertDateToArarbic(dateString) {
+  const date = new Date(dateString);
+
+  const months = [
+    "يناير",
+    "فبراير",
+    "مارس",
+    "أبريل",
+    "مايو",
+    "يونيو",
+    "يوليوز",
+    "غشت",
+    "شتنبر",
+    "أكتوبر",
+    "نونبر",
+    "دجنبر",
+  ];
+
+  const day = date.getUTCDate();
+  const month = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+
+  // return `${day} ${month} ${year} - ${hours}:${minutes}`;
+  return `${day} ${month} ${year}`;
+}

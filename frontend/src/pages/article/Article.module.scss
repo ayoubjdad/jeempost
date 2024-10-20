@@ -1,4 +1,5 @@
 .main {
+  margin: 32px auto;
   width: 100%;
 }
 
@@ -13,11 +14,24 @@
 .article {
   gap: 32px;
   display: grid;
+  height: fit-content;
   img {
     width: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 10px;
   }
+}
+
+.category,
+.date {
+  color: #6c757d;
+}
+
+.title {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
 }
 
 .articleDetails {
@@ -31,7 +45,19 @@
 }
 
 .author {
-  font-weight: 700;
   font-size: 16px;
+  font-weight: 700;
   line-height: 175%;
+}
+
+.sections {
+  gap: 64px;
+  display: grid;
+  height: fit-content;
+}
+
+@media (max-width: 575.98px) {
+  .smallSection {
+    display: none;
+  }
 }

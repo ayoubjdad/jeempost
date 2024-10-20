@@ -3,68 +3,86 @@ import styles from "./Article.module.scss";
 import Ad300x250 from "../../layouts/ads/300x250/Ad300x250";
 import Tags from "../../layouts/tags/Tags";
 import { categories } from "../../data/Categories";
+import { useLocation } from "react-router";
+import { convertDateToArarbic } from "../../helpers/global.helper";
+import SectionContainer from "../../sections/section-container/SectionContainer";
+import SideArticle from "../../components/articles/side-article/SideArticle";
+import { newsUrl } from "../../api/config";
+import axios from "axios";
+import { useQuery } from "react-query";
+import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
+import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
+
+const options = {
+  refetchOnWindowFocus: false,
+  retry: false,
+};
+
+const fetchNews = async () => {
+  const response = await axios.get(newsUrl);
+  return response.data;
+};
 
 export default function Article() {
+  const location = useLocation();
+  const { article } = location.state || {}; // If no state is passed, article will be undefined.
+
+  const { data: posts, isLoading: postsLoading } = useQuery(
+    "posts",
+    fetchNews,
+    options
+  );
+
+  if (!article) {
+    return <p>No article data available.</p>;
+  }
+
+  const {
+    id,
+    image: { src, srcset },
+    author: { name = "جيم بوست" },
+    headline,
+    categoryId,
+    content,
+    location: artcileLocation = "المغرب",
+    createdAt,
+  } = article;
+
+  const category = categories.find((category) => category.id === categoryId);
+
+  const formatedDate = convertDateToArarbic(createdAt);
+
   return (
-    <div className={styles.main}>
+    <div className={styles.main} key={id}>
+      <Ad970x250 />
       <div className={styles.container}>
         <div className={styles.article}>
-          <p>الرئيسية | تقارير</p>
-          <h1>تهم تلاحق "مستشار" عمدة مدينة طنجة</h1>
-          <img
-            src="https://i1.hespress.com/wp-content/uploads/2024/08/TPI-Tanger.jpg"
-            alt=""
-          />
+          <p className={styles.category}>
+            {artcileLocation} | {category.name}
+          </p>
+          <h1 className={styles.title}>{headline}</h1>
+          <img srcSet={srcset} src={src} alt={headline} />
           <div>
-            <p className={styles.author}>جيم بوست</p>
-            <p className={styles.date}>الإثنين 30 شتنبر 2024 - 22:24</p>
+            <p className={styles.author}>{name}</p>
+            <p className={styles.date}>{formatedDate}</p>
           </div>
-          <div className={styles.articleDetails}>
-            <p>
-              في تطور جديد بخصوص قضية حسن المزدوجي، عضو حزب الأصالة والمعاصرة
-              “مستشار” عمدة المدينة منير ليموري، علمت جريدة هسبريس الإلكترونية
-              أن قاضي التحقيق وجه مجموعة من التهم إلى المزدوجي الموجود رهن
-              الاعتقال.
-            </p>
-            <p>
-              وقرر قاضي التحقيق بالمحكمة الابتدائية بمدينة طنجة، محمد قريش،
-              متابعة المتهم حسن المزدوجي من أجل جنح “بث وتوزيع ادعاءات ووقائع
-              كاذبة بهدف المس بالحياة الخاصة للأشخاص والتشهير بهم، وبث وتوزيع
-              ادعاءات ووقائع كاذبة بقصد المساس بالحياة الخاصة لامرأة بسبب جنسها،
-              والتشهير والتهديد والتمييز بسبب الانتماء والسب والقذف العلني في حق
-              امرأة بسبب جنسها”.
-            </p>
-            <p>
-              وطالب قاضي التحقيق متابعة المتهم بناء على الأفعال المنصوص عليها
-              وعلى عقوبتها في الفصول “2/447 و3/447 و425 و427 و429 و443 و1/444
-              و2/444 و1/431 و2/432 من القانون الجنائي والقانون 13-88 المتعلق
-              بالصحافة والنشر”.
-            </p>
-            <p>
-              في تطور جديد بخصوص قضية حسن المزدوجي، عضو حزب الأصالة والمعاصرة
-              “مستشار” عمدة المدينة منير ليموري، علمت جريدة هسبريس الإلكترونية
-              أن قاضي التحقيق وجه مجموعة من التهم إلى المزدوجي الموجود رهن
-              الاعتقال.
-            </p>
-            <p>
-              وقرر قاضي التحقيق بالمحكمة الابتدائية بمدينة طنجة، محمد قريش،
-              متابعة المتهم حسن المزدوجي من أجل جنح “بث وتوزيع ادعاءات ووقائع
-              كاذبة بهدف المس بالحياة الخاصة للأشخاص والتشهير بهم، وبث وتوزيع
-              ادعاءات ووقائع كاذبة بقصد المساس بالحياة الخاصة لامرأة بسبب جنسها،
-              والتشهير والتهديد والتمييز بسبب الانتماء والسب والقذف العلني في حق
-              امرأة بسبب جنسها”.
-            </p>
-            <p>
-              وطالب قاضي التحقيق متابعة المتهم بناء على الأفعال المنصوص عليها
-              وعلى عقوبتها في الفصول “2/447 و3/447 و425 و427 و429 و443 و1/444
-              و2/444 و1/431 و2/432 من القانون الجنائي والقانون 13-88 المتعلق
-              بالصحافة والنشر”.
-            </p>
-          </div>
-
-          <Tags list={categories.splice(0, 3)} />
+          <div
+            className={styles.articleDetails}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+          <Tags list={categories.slice(0, 3)} />
         </div>
-        <div className={styles.article}>Article</div>
+        <div className={`${styles.sections} ${styles.smallSection}`}>
+          <Ad300x250 />
+          <SectionContainer title="الأكثر قراءة">
+            <div style={{ display: "grid", gap: "16px" }}>
+              {posts?.slice(0, 10)?.map((article, index) => (
+                <SideArticle index={index} article={article} />
+              ))}
+            </div>
+          </SectionContainer>
+          <Ad300x600 />
+        </div>
       </div>
     </div>
   );

@@ -1,23 +1,43 @@
 import React from "react";
 import styles from "./ArticleWithBackground.module.scss";
+import { categories } from "../../../data/Categories";
+import { convertDateToArarbic } from "../../../helpers/global.helper";
+import { useNavigate } from "react-router";
 
 export default function ArticleWithBackground({ article, key }) {
-  const { headline, underHeadline, content, date, image, url, imagesSrcset } =
-    article;
+  const {
+    id,
+    image: { src },
+    headline,
+    categoryId,
+    createdAt,
+  } = article;
+
+  const category = categories.find((category) => category.id === categoryId);
+
+  const formatedDate = convertDateToArarbic(createdAt);
+
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(`/news/19/10/2024/${headline}`, { state: { article } });
+  };
 
   return (
     <div
-      key={key}
+      key={id}
       className={styles.main}
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${image})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${src})`,
       }}
     >
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <p className={styles.tag}>تقارير</p>
-        <p className={styles.time}>23 شتنبر 2024</p>
+        <p className={styles.tag}>{category.name}</p>
+        <p className={styles.time}>{formatedDate}</p>
       </div>
-      <p className={styles.title}>{headline}</p>
+      <p className={styles.title} onClick={onClick}>
+        {headline}
+      </p>
     </div>
   );
 }
