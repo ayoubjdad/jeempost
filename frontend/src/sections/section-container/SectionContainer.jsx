@@ -1,14 +1,13 @@
 import React from "react";
 import styles from "./SectionContainer.module.scss";
 import ReadMore from "../../components/read-more/ReadMore";
-import { categories } from "../../data/Categories";
-import { useNavigate } from "react-router";
 
 export default function SectionContainer({
   title,
   style,
   children,
   readMore = false,
+  onReadMore = () => {},
 }) {
   // const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ export default function SectionContainer({
       {readMore && (
         <div className={styles.readMore}>
           <ReadMore
-            // onClick={onClick}
+            onClick={onReadMore}
             text="اقرأ المزيد"
             endIcon={<i class="fi fi-rr-arrow-left" />}
           />

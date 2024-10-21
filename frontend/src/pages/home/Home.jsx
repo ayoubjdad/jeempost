@@ -90,12 +90,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Videos articles={posts} />
+
+      <Videos />
+
       <div className={styles.container}>
         <div className={styles.sections}>
           <ArtSection artList={artList} />
         </div>
       </div>
+
       <Sports articles={sportList} />
     </div>
   );

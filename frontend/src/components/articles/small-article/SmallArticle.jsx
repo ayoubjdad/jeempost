@@ -22,6 +22,8 @@ export default function SmallArticle({ key, article }) {
     updatedAt,
   } = article;
 
+  const descrption = content?.slice(0, 60) + "...";
+
   const category = categories.find((category) => category.id === categoryId);
 
   const formatedDate = convertDateToArarbic(createdAt);
@@ -43,9 +45,7 @@ export default function SmallArticle({ key, article }) {
         <p className={styles.title} onClick={onClick}>
           {headline}
         </p>
-        {content && (
-          <p className={styles.description}>{content?.slice(0, 60)}...</p>
-        )}
+        {content && <p className={styles.description}>{descrption}</p>}
       </div>
     </div>
   );
