@@ -2,18 +2,22 @@ import React from "react";
 import styles from "./MainSlide.module.scss";
 import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import { useNavigate } from "react-router";
+import { newsFormatDate } from "../../helpers/global.helper";
 
 export default function MainSlide({ posts }) {
   const mainPost = posts?.[0];
   const {
     headline,
     image: { src },
+    createdAt,
   } = mainPost;
 
   const navigate = useNavigate();
 
+  const linkDate = newsFormatDate(createdAt);
+
   const onClick = () => {
-    navigate(`/news/19/10/2024/${headline}`, { state: { article: mainPost } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { article: mainPost } });
   };
 
   return (

@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./SmallArticle.module.scss";
 import { categories } from "../../../data/Categories";
-import { convertDateToArarbic } from "../../../helpers/global.helper";
+import {
+  convertDateToArarbic,
+  newsFormatDate,
+} from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 
 export default function SmallArticle({ key, article }) {
@@ -22,16 +25,16 @@ export default function SmallArticle({ key, article }) {
     updatedAt,
   } = article;
 
+  const navigate = useNavigate();
+
   const descrption = content?.slice(0, 60) + "...";
+  const formatedDate = convertDateToArarbic(createdAt);
+  const linkDate = newsFormatDate(createdAt);
 
   const category = categories.find((category) => category.id === categoryId);
 
-  const formatedDate = convertDateToArarbic(createdAt);
-
-  const navigate = useNavigate();
-
   const onClick = () => {
-    navigate(`/news/19/10/2024/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
   };
 
   return (
