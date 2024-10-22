@@ -76,7 +76,12 @@ export default function Home() {
 
       <div className={styles.container}>
         <div className={styles.sections}>
-          <ArtSection artList={artList} />
+          <div
+            className={styles.sectionsGrid}
+            style={{ gridTemplateColumns: "1fr" }}
+          >
+            <ArtSection artList={artList} />
+          </div>
         </div>
       </div>
 

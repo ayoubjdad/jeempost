@@ -27,9 +27,10 @@ export default function SmallArticle({ key, article }) {
 
   const navigate = useNavigate();
 
-  const descrption = content?.slice(0, 60) + "...";
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
+  const displayedContent =
+    content?.slice(0, 60).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
   const category = categories.find((category) => category.id === categoryId);
 
@@ -48,7 +49,7 @@ export default function SmallArticle({ key, article }) {
         <p className={styles.title} onClick={onClick}>
           {headline}
         </p>
-        {content && <p className={styles.description}>{descrption}</p>}
+        {content && <p className={styles.description}>{displayedContent}</p>}
       </div>
     </div>
   );

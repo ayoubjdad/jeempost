@@ -13,6 +13,8 @@ export default function MainArticle({
   withoutImage = false,
   withoutDate = false,
 }) {
+  const navigate = useNavigate();
+
   const {
     id,
     image: { src, srcset },
@@ -26,8 +28,8 @@ export default function MainArticle({
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-
-  const navigate = useNavigate();
+  const displayedContent =
+    content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
   const onClick = () => {
     navigate(`/news/${linkDate}/${headline}`, { state: { article } });
@@ -49,9 +51,7 @@ export default function MainArticle({
           {headline}
         </p>
       )}
-      {content && (
-        <p className={styles.description}>{content?.slice(0, 100)}...</p>
-      )}
+      {content && <p className={styles.description}>{displayedContent}</p>}
     </div>
   );
 }

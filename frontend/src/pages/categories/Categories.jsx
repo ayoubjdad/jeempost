@@ -12,7 +12,6 @@ const Categories = ({ category }) => {
   const { data: posts } = useQuery("news", fetchNews, {
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: !!category,
   });
 
   const postsList = posts?.filter(

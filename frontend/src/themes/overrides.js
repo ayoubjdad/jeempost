@@ -9,7 +9,7 @@ export const theme = createTheme({
           color: "#fff",
           width: "248px",
           boxShadow: "none",
-          backgroundColor: "#031a46",
+          backgroundColor: "#040463",
         },
       },
     },
