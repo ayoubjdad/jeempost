@@ -31,6 +31,12 @@ export default function Header() {
             <Link onClick={handleCategoryClick} element={element} />
           ))}
         </div>
+        <div className={styles.bottom}>
+          <Box component="i" className="fi fi-brands-facebook" />
+          <Box component="i" className="fi fi-brands-instagram" />
+          <Box component="i" className="fi fi-brands-youtube" />
+          <Box component="i" className="fi fi-brands-twitter-alt" />
+        </div>
       </div>
     );
   };

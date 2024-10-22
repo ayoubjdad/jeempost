@@ -63,8 +63,24 @@
 
 .header {
   padding: 16px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #6c757d;
   i {
+    cursor: pointer;
+    justify-content: flex-end;
+  }
+}
+
+.bottom {
+  position: absolute;
+  width: -webkit-fill-available;
+  bottom: 0;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid #6c757d;
+  i {
+    display: flex;
     cursor: pointer;
     justify-content: flex-end;
   }
