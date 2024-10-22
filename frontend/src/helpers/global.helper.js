@@ -44,3 +44,13 @@ export function convertDateToArarbic(dateString) {
   // return `${day} ${month} ${year} - ${hours}:${minutes}`;
   return `${day} ${month} ${year}`;
 }
+
+// * Convert from 2024-10-19T15:17:25.174Z to 19/10/2024
+export function newsFormatDate(isoString) {
+  const date = new Date(isoString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}

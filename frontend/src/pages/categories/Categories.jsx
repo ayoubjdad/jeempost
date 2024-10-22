@@ -1,46 +1,43 @@
 import React from "react";
 import styles from "./Categories.module.scss";
-import { newsUrl } from "../../api/data";
 import axios from "axios";
 import { useQuery } from "react-query";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import SectionContainer from "../../sections/section-container/SectionContainer";
 import { categories } from "../../data/Categories";
+import { newsUrl } from "../../api/config";
 
-const options = {
-  refetchOnWindowFocus: false,
-  retry: false,
-};
 const fetchNews = async () => {
-  const response = await axios.get(newsUrl, {
-    headers: {
-      "x-rapidapi-key": "87705006f3mshfe19f4c4fb732fdp1f49e3jsnf93da7793083",
-      "x-rapidapi-host": "arabic-news-api.p.rapidapi.com",
-    },
-  });
-  return response?.data?.results || [];
+  const { data } = await axios.get(newsUrl);
+  return data;
 };
 
-export default function Categories({ category }) {
-  const categoryName = categories.filter((cat) => cat.slug === category);
+const Categories = ({ category }) => {
+  const categoryData = categories.find((cat) => cat.slug === category);
 
-  const { data: posts, isLoading: postsLoading } = useQuery(
-    "posts",
-    fetchNews,
-    options
+  const { data: posts } = useQuery("posts", fetchNews, {
+    refetchOnWindowFocus: false,
+    retry: false,
+    enabled: !!category,
+  });
+
+  const postsList = posts?.filter(
+    (post) => post.categoryId === categoryData?.id
   );
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <SectionContainer title={categoryName[0].name} readMore>
+        <SectionContainer title={categoryData.name} readMore>
           <div className={styles.section}>
-            {posts?.map((article, index) => (
-              <MainArticle key={index} article={article} />
+            {postsList?.map((article) => (
+              <MainArticle key={article.id} article={article} />
             ))}
           </div>
         </SectionContainer>
       </div>
     </div>
   );
-}
+};
+
+export default Categories;

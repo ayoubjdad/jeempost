@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./MainArticle.module.scss";
 import { categories } from "../../../data/Categories";
-import { convertDateToArarbic } from "../../../helpers/global.helper";
+import {
+  convertDateToArarbic,
+  newsFormatDate,
+} from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 
 export default function MainArticle({
@@ -13,28 +16,21 @@ export default function MainArticle({
   const {
     id,
     image: { src, srcset },
-    author: { name, profileUrl },
     headline,
-    subHeadline,
     categoryId,
     content,
-    url,
-    location,
-    tags,
-    keywords,
-    comments,
     createdAt,
-    updatedAt,
   } = article;
 
   const category = categories.find((category) => category.id === categoryId);
 
   const formatedDate = convertDateToArarbic(createdAt);
+  const linkDate = newsFormatDate(createdAt);
 
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/news/19/10/2024/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
   };
 
   return (

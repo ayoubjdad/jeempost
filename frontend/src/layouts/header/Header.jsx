@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 import Weather from "../../sections/weather/Weather";
 import { Box, Drawer, ThemeProvider } from "@mui/material";
 import { theme } from "../../themes/overrides";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { categories } from "../../data/Categories";
 import { CategoriesContext } from "../../context/CategoriesContext";
 
@@ -28,7 +28,7 @@ export default function Header() {
         </div>
         <div className={styles.menuItems}>
           {categories.map((element) => (
-            <p className={styles.menuItem}>{element.name}</p>
+            <Link onClick={handleCategoryClick} element={element} />
           ))}
         </div>
       </div>
@@ -46,6 +46,7 @@ export default function Header() {
   const handleCategoryClick = (category) => {
     setCategory(category.slug);
     navigate(`/${category.slug}`);
+    setOpen(false);
   };
 
   const menuElements = categories.filter((category) => category.isMenu);
@@ -64,23 +65,17 @@ export default function Header() {
               <Menu onClose={toggleDrawer(false)} />
             </Drawer>
           </ThemeProvider>
-          {/* <img
-            src="https://www.assahifa.com/wp-content/themes/assahifa/assets/images/logo.png"
-            alt=""
-            onClick={handleClick}
-          /> */}
           <p className={styles.logo} onClick={handleClick}>
             جيم بوست
           </p>
         </div>
         <div className={styles.links}>
           {menuElements.map((element, index) => (
-            <span
-              className={index && styles.link}
-              onClick={() => handleCategoryClick(element)}
-            >
-              {element.name}
-            </span>
+            <Link
+              onClick={handleCategoryClick}
+              element={element}
+              index={index}
+            />
           ))}
         </div>
         <Weather />
@@ -88,3 +83,11 @@ export default function Header() {
     </div>
   );
 }
+
+const Link = ({ onClick, element, index }) => {
+  return (
+    <span className={index && styles.link} onClick={() => onClick(element)}>
+      {element.name}
+    </span>
+  );
+};

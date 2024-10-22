@@ -13,11 +13,6 @@ import { useQuery } from "react-query";
 import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
 import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
 
-const options = {
-  refetchOnWindowFocus: false,
-  retry: false,
-};
-
 const fetchNews = async () => {
   const response = await axios.get(newsUrl);
   return response.data;
@@ -25,13 +20,12 @@ const fetchNews = async () => {
 
 export default function Article() {
   const location = useLocation();
-  const { article } = location.state || {}; // If no state is passed, article will be undefined.
+  const { article } = location.state || {};
 
-  const { data: posts, isLoading: postsLoading } = useQuery(
-    "posts",
-    fetchNews,
-    options
-  );
+  const { data: posts } = useQuery("posts", fetchNews, {
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
 
   if (!article) {
     return <p>No article data available.</p>;

@@ -22,8 +22,7 @@ export default function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/article" element={<Article />} />
-            <Route path="/news/19/10/2024/:headline" element={<Article />} />
+            <Route path="/news/:linkDate/:headline" element={<Article />} />
             <Route path="/editor" element={<Editor />} />
             <Route
               path={`/${category}`}
