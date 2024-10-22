@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styles from "./Home.module.scss";
 import { useQuery } from "react-query";
-import axios from "axios";
 import ArticleWithBackground from "../../components/articles/article-with-background/ArticleWithBackground";
 import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import MainArticle from "../../components/articles/main-article/MainArticle";
@@ -14,33 +13,15 @@ import { categories } from "../../data/Categories";
 import PrayerTimes from "../../sections/prayer-times/PrayerTimes";
 import Tags from "../../layouts/tags/Tags";
 import { CategoriesContext } from "../../context/CategoriesContext";
-import { newsUrl, serverUrl } from "../../api/config";
-
-const options = {
-  refetchOnWindowFocus: false,
-  retry: false,
-};
-const fetchNews = async () => {
-  const response = await axios.get(
-    newsUrl
-    //   {
-    //   headers: {
-    //     "x-rapidapi-key": "87705006f3mshfe19f4c4fb732fdp1f49e3jsnf93da7793083",
-    //     "x-rapidapi-host": "arabic-news-api.p.rapidapi.com",
-    //   },
-    // }
-  );
-  return response.data;
-};
+import { fetchNews } from "../../helpers/data.helpers";
 
 export default function Home() {
   const { setCategory } = useContext(CategoriesContext);
 
-  const { data: posts, isLoading: postsLoading } = useQuery(
-    "posts",
-    fetchNews,
-    options
-  );
+  const { data: posts, isLoading: postsLoading } = useQuery("news", fetchNews, {
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
 
   if (postsLoading) return null;
 

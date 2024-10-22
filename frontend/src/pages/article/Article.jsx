@@ -7,22 +7,16 @@ import { useLocation } from "react-router";
 import { convertDateToArarbic } from "../../helpers/global.helper";
 import SectionContainer from "../../sections/section-container/SectionContainer";
 import SideArticle from "../../components/articles/side-article/SideArticle";
-import { newsUrl } from "../../api/config";
-import axios from "axios";
 import { useQuery } from "react-query";
 import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
 import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
-
-const fetchNews = async () => {
-  const response = await axios.get(newsUrl);
-  return response.data;
-};
+import { fetchNews } from "../../helpers/data.helpers";
 
 export default function Article() {
   const location = useLocation();
   const { article } = location.state || {};
 
-  const { data: posts } = useQuery("posts", fetchNews, {
+  const { data: posts } = useQuery("news", fetchNews, {
     refetchOnWindowFocus: false,
     retry: false,
   });
