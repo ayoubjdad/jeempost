@@ -13,6 +13,31 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.loader {
+  width: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 #030355, -20px 0 #090998;
+    background: #030355;
+  }
+  33% {
+    box-shadow: 20px 0 #030355, -20px 0 #090998;
+    background: #090998;
+  }
+  66% {
+    box-shadow: 20px 0 #090998, -20px 0 #030355;
+    background: #090998;
+  }
+  100% {
+    box-shadow: 20px 0 #090998, -20px 0 #030355;
+    background: #030355;
+  }
+}
+
 @media (max-width: 575.98px) {
   .section {
     padding: 0 20px;

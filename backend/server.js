@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -6,13 +7,11 @@ const newsRoutes = require("./routes/news");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const CONNECTION_STRING = process.env.CONNECTION_STRING;
+const DATABASENAME = process.env.DATABASENAME;
 
-const CONNECTION_STRING =
-  "mongodb+srv://ayoubjdad1:O6sdnvt1j8MjIbqp@bigfocus.lx7trmo.mongodb.net/?retryWrites=true&w=majority&appName=bigFocus";
-const DATABASENAME = "bigFocus";
-
-app.use(cors()); // Add CORS middleware
-app.use(bodyParser.json()); // Add body parser middleware to parse JSON
+app.use(cors());
+app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose
