@@ -4,13 +4,9 @@ import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import { useNavigate } from "react-router";
 import { newsFormatDate } from "../../helpers/global.helper";
 
-export default function MainSlide({ posts }) {
+export default function MainSlide({ posts = [] }) {
   const mainPost = posts?.[0];
-  const {
-    headline,
-    image: { src },
-    createdAt,
-  } = mainPost;
+  const { headline, image: { src } = {}, createdAt } = mainPost || {};
 
   const navigate = useNavigate();
 
@@ -39,13 +35,13 @@ export default function MainSlide({ posts }) {
   );
 }
 
-const Articles = ({ posts }) => {
+const Articles = ({ posts = [] }) => {
   const articles = posts?.slice(1, 5);
 
   return (
     <div className={styles.mainSlide}>
       {articles?.map((article, index) => (
-        <SmallArticle key={index} article={article} />
+        <SmallArticle index={index} article={article} />
       ))}
     </div>
   );

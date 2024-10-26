@@ -17,12 +17,12 @@ export default function MainArticle({
 
   const {
     id,
-    image: { src, srcset },
+    image: { src, srcset } = {},
     headline,
     categoryId,
     content,
     createdAt,
-  } = article;
+  } = article || {};
 
   const category = categories.find((category) => category.id === categoryId);
 
@@ -36,7 +36,7 @@ export default function MainArticle({
   };
 
   return (
-    <div key={id} className={styles.main}>
+    <div key={id || key} className={styles.main}>
       {!withoutImage && (
         <img alt="" srcSet={srcset} className={styles.image} src={src} />
       )}

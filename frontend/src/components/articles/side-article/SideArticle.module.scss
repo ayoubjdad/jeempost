@@ -1,26 +1,53 @@
 .main {
-  gap: 16px;
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr 6fr;
-}
-
-.title {
-  width: 100%;
+  gap: 24px;
+  display: flex;
+  padding: 12px;
   cursor: pointer;
-  font-size: 12px;
-  overflow: hidden;
-  font-weight: 700;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  border-radius: 6px;
+  align-items: center;
   &:hover {
-    text-decoration: underline;
+    background-color: #f8f9fa;
   }
 }
 
-.number {
+.tag,
+.author,
+.time {
+  gap: 6px;
   display: flex;
-  color: #dedbdb;
-  font-size: 24px;
-  justify-content: center;
+  font-size: 12px;
+  align-items: center;
+}
+
+.tag {
+  color: red;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.index {
+  max-width: 4px;
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.text {
+  display: grid;
+  gap: 10px;
+}
+
+.title {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  &:hover {
+    text-decoration: underline;
+  }
 }

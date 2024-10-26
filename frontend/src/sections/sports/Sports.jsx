@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Sports.module.scss";
 import SectionContainer from "../section-container/SectionContainer";
 import { useQuery } from "react-query";
@@ -21,22 +21,30 @@ const formatDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
+const formatTimestampToDate = (date) =>
+  `${String(date.getDate()).padStart(2, "0")}-${String(
+    date.getMonth() + 1
+  ).padStart(2, "0")}-${date.getFullYear()}`;
+
+const isToday = (timestamp) => {
+  const today = new Date();
+  const gameDate = new Date(timestamp * 1000);
+  return formatTimestampToDate(today) === formatTimestampToDate(gameDate);
+};
+
 const filterGamesByPriority = (games) => {
   try {
-    const newArray = [];
-    for (const tour of tournamentsPriority) {
-      const newGames = games.filter(
-        (item) => item.tournament.uniqueTournament.id === tour.id
+    const prioritizedGames = tournamentsPriority.flatMap((tour) => {
+      return games.filter(
+        (game) =>
+          game.tournament.uniqueTournament.id === tour.id &&
+          isToday(game.startTimestamp)
       );
-      if (newGames?.length) {
-        newArray.push(...newGames);
-      }
-    }
-
-    return newArray;
+    });
+    return prioritizedGames;
   } catch (error) {
     console.error("❌", error);
-    return {};
+    return [];
   }
 };
 

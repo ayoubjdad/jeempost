@@ -18,19 +18,21 @@ import { fetchNews } from "../../helpers/data.helpers";
 export default function Home() {
   const { setCategory } = useContext(CategoriesContext);
 
-  const { data: posts, isLoading: postsLoading } = useQuery("news", fetchNews, {
-    refetchOnWindowFocus: false,
-    retry: false,
-  });
+  const { data: news = [], isLoading: newsLoading } = useQuery(
+    "news",
+    fetchNews,
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+    }
+  );
 
-  if (postsLoading) return null;
-
-  const mainSlideList = posts?.filter((item) => item.isHighlight);
-  const lastNewsList = posts?.filter((item) => item.categoryId === 1);
-  const economyList = posts?.filter((item) => item.categoryId === 3);
-  const sportList = posts?.filter((item) => item.categoryId === 4);
-  const artList = posts?.filter((item) => item.categoryId === 5);
-  const worldList = posts?.filter((item) => item.categoryId === 6);
+  const mainSlideList = news?.filter((item) => item.isHighlight);
+  const lastNewsList = news?.filter((item) => item.categoryId === 1);
+  const economyList = news?.filter((item) => item.categoryId === 3);
+  const sportList = news?.filter((item) => item.categoryId === 4);
+  const artList = news?.filter((item) => item.categoryId === 5);
+  const worldList = news?.filter((item) => item.categoryId === 6);
 
   return (
     <div className={styles.main}>
@@ -61,8 +63,8 @@ export default function Home() {
                 <PrayerTimes />
               </SectionContainer>
               <SectionContainer title="الأكثر قراءة">
-                <div style={{ display: "grid", gap: "16px" }}>
-                  {posts?.slice(0, 10)?.map((article, index) => (
+                <div style={{ display: "grid" }}>
+                  {news?.slice(0, 10)?.map((article, index) => (
                     <SideArticle index={index} article={article} />
                   ))}
                 </div>
@@ -90,7 +92,7 @@ export default function Home() {
   );
 }
 
-const LastNewsSection = ({ lastNewsList }) => {
+const LastNewsSection = ({ lastNewsList = [] }) => {
   if (!lastNewsList?.length) return null;
 
   return (
@@ -107,7 +109,7 @@ const LastNewsSection = ({ lastNewsList }) => {
   );
 };
 
-const EconomySection = ({ economyList }) => {
+const EconomySection = ({ economyList = [] }) => {
   if (!economyList?.length) return null;
 
   return (
@@ -121,7 +123,7 @@ const EconomySection = ({ economyList }) => {
   );
 };
 
-const WorldSection = ({ worldList }) => {
+const WorldSection = ({ worldList = [] }) => {
   if (!worldList?.length) return null;
 
   return (
@@ -135,14 +137,14 @@ const WorldSection = ({ worldList }) => {
   );
 };
 
-const ArtSection = ({ artList }) => {
+const ArtSection = ({ artList = [] }) => {
   if (!artList?.length) return null;
 
   return (
     <SectionContainer title="فن" readMore>
       <div className={styles.section}>
         {artList?.slice(0, 9)?.map((article, index) => (
-          <SmallArticle key={index} article={article} withDescription />
+          <SmallArticle index={index} article={article} withDescription />
         ))}
       </div>
     </SectionContainer>

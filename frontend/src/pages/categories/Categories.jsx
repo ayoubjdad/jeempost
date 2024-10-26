@@ -17,6 +17,7 @@ const Categories = ({ category }) => {
   const postsList = posts?.filter(
     (post) => post.categoryId === categoryData?.id
   );
+  console.log(":::::: ~ postsList:", postsList);
 
   return (
     <div className={styles.main}>

@@ -14,11 +14,7 @@ export default function Game({ game }) {
     tournament,
   } = game;
 
-  // status.description==="Ended"
-
-  const homeTeamLogo = `https://api.sofascore.app/api/v1/team/${homeTeam.id}/image`;
-  const awayTeamLogo = `https://api.sofascore.app/api/v1/team/${awayTeam.id}/image`;
-  const tournamentLogo = `https://api.sofascore.app/api/v1/unique-tournament/${tournament.uniqueTournament.id}/image/dark`;
+  // const tournamentLogo = `https://api.sofascore.app/api/v1/unique-tournament/${tournament.uniqueTournament.id}/image/dark`;
 
   const formattedTime = convertTimestampToTime(startTimestamp);
 
@@ -29,12 +25,19 @@ export default function Game({ game }) {
 
   return (
     <div className={styles.main}>
-      <img src={homeTeamLogo} alt="" className={styles.logo} />
+      <TeamLogo team={homeTeam} />
       <div className={styles.tournament}>
-        {/* <img src={tournamentLogo} alt="" className={styles.tournamentLogo} /> */}
         <div className={styles.time}>{infos}</div>
       </div>
-      <img src={awayTeamLogo} alt="" className={styles.logo} />
+      <TeamLogo team={awayTeam} />
     </div>
   );
 }
+
+const TeamLogo = ({ team }) => {
+  const logo = `https://api.sofascore.app/api/v1/team/${team.id}/image`;
+
+  return (
+    <img src={logo} alt={team.name} title={team.name} className={styles.logo} />
+  );
+};

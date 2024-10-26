@@ -1,12 +1,29 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .main {
   gap: 24px;
   height: 160px;
   display: grid;
   padding: 16px;
+  cursor: pointer;
+  transition: 500ms;
   border-radius: 6px;
+  align-items: flex-end;
   background-size: cover;
   background-position: center;
-  align-items: flex-end;
+  &:hover {
+    outline: 1px solid white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    .playIcon {
+      display: flex;
+    }
+    .title {
+      text-decoration: underline;
+    }
+  }
 }
 
 .tag,
@@ -29,13 +46,11 @@
   color: white;
   cursor: pointer;
   font-weight: 700;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .playIcon {
   top: 30%;
+  display: none;
   font-size: 36px;
   position: relative;
   text-align: center;

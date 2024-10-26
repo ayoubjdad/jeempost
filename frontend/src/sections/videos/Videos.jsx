@@ -1,13 +1,8 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
 import styles from "./Videos.module.scss";
 import SectionContainer from "../section-container/SectionContainer";
 import MainVideo from "../../components/videos/main-video/MainVideo";
 import { useQuery } from "react-query";
-
-const options = {
-  refetchOnWindowFocus: false,
-  retry: false,
-};
 
 const API_KEY = "AIzaSyA-temT-dFDU2GZgFezhlH2ei8fyDfXRzI";
 const CHANNEL_ID = "UC9CDwSeyjDPUWAITrRCSOQQ";
@@ -21,6 +16,7 @@ const fetchVideos = async () => {
     return response.json();
   } catch (error) {
     console.error("❌", error);
+    return null;
   }
 };
 
@@ -29,8 +25,8 @@ export default function Videos() {
     "videos",
     fetchVideos,
     {
-      ...options,
-      suspense: true,
+      refetchOnWindowFocus: false,
+      retry: false,
     }
   );
 
@@ -43,19 +39,17 @@ export default function Videos() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <Suspense fallback={<div>Loading user data...</div>}>
-          <SectionContainer title="فيديوهات" readMore onReadMore={onReadMore}>
-            <div className={styles.section}>
-              {videosList.map((video, index) => (
-                <MainVideo
-                  video={video}
-                  index={index}
-                  isLoading={videosLoading}
-                />
-              ))}
-            </div>
-          </SectionContainer>
-        </Suspense>
+        <SectionContainer title="فيديوهات" readMore onReadMore={onReadMore}>
+          <div className={styles.section}>
+            {videosList.map((video, index) => (
+              <MainVideo
+                video={video}
+                index={index}
+                isLoading={videosLoading}
+              />
+            ))}
+          </div>
+        </SectionContainer>
       </div>
     </div>
   );

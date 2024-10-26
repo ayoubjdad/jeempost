@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const newsRoutes = require("./routes/news");
-// const invoiceRoutes = require("./routes/invoices");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +25,6 @@ mongoose
   .catch((err) => console.error("Failed to connect to MongoDB", err));
 
 app.use("/news", newsRoutes);
-// app.use("/invoices", invoiceRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");

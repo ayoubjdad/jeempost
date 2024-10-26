@@ -7,23 +7,15 @@ import {
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 
-export default function SmallArticle({ key, article }) {
+export default function SmallArticle({ index, article = {} }) {
   const {
     id,
-    image: { src, srcset },
-    author: { name, profileUrl },
+    image: { src, srcset } = {},
     headline,
-    subHeadline,
     categoryId,
     content,
-    url,
-    location,
-    tags,
-    keywords,
-    comments,
     createdAt,
-    updatedAt,
-  } = article;
+  } = article || {};
 
   const navigate = useNavigate();
 
@@ -32,20 +24,27 @@ export default function SmallArticle({ key, article }) {
   const displayedContent =
     content?.slice(0, 60).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
-  const category = categories.find((category) => category.id === categoryId);
+  const category =
+    categories.find((category) => category.id === categoryId) || {};
 
   const onClick = () => {
     navigate(`/news/${linkDate}/${headline}`, { state: { article } });
   };
 
   return (
-    <div key={key} className={styles.main}>
+    <div key={id || index} className={styles.main}>
       <img alt={headline} srcSet={srcset} className={styles.image} src={src} />
       <div className={styles.text}>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <p className={styles.tag}>{category.name}</p>|
-          <p className={styles.time}>{formatedDate}</p>
-        </div>
+        {(category?.name || formatedDate) && (
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            {category?.name && (
+              <>
+                <p className={styles.tag}>{category?.name}</p>|
+              </>
+            )}
+            {formatedDate && <p className={styles.time}>{formatedDate}</p>}
+          </div>
+        )}
         <p className={styles.title} onClick={onClick}>
           {headline}
         </p>

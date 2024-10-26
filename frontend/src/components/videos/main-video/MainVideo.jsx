@@ -25,23 +25,24 @@ export default function MainVideo({ video, isLoading, index }) {
   }
 
   return (
-    <div
-      key={videoId}
-      className={styles.main}
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${thumbnail})`,
-      }}
+    <a
+      href={`https://www.youtube.com/watch?v=${videoId}`}
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      <i className={`fi fi-tr-play-circle ${styles.playIcon}`} />
-      <a
-        href={`https://www.youtube.com/watch?v=${videoId}`}
-        target="_blank"
-        rel="noopener noreferrer"
+      <div
+        key={videoId}
+        className={styles.main}
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${thumbnail})`,
+        }}
       >
+        <i className={`fi fi-tr-play-circle ${styles.playIcon}`} />
+
         <p className={styles.title} title={video?.snippet.title}>
           {title}
         </p>
-      </a>
-    </div>
+      </div>
+    </a>
   );
 }
