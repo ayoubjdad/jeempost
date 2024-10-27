@@ -28,7 +28,6 @@ export default function Home() {
   );
 
   const mainSlideList = news?.filter((item) => item.isHighlight);
-  const lastNewsList = news?.filter((item) => item.categoryId === 1);
   const economyList = news?.filter((item) => item.categoryId === 3);
   const sportList = news?.filter((item) => item.categoryId === 4);
   const artList = news?.filter((item) => item.categoryId === 5);
@@ -49,7 +48,7 @@ export default function Home() {
               style={{ gridTemplateColumns: "1fr" }}
             >
               <Tags list={categories} onClick={setCategory} />
-              <LastNewsSection lastNewsList={lastNewsList} />
+              <LastNewsSection lastNewsList={news} />
             </div>
           </div>
 

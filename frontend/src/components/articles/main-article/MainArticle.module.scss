@@ -1,7 +1,7 @@
 .main {
   gap: 10px;
-  // width: 300px;
   display: grid;
+  height: fit-content;
 }
 
 .tag,
@@ -15,10 +15,6 @@
 
 .tag {
   color: red;
-  // padding: 6px 10px;
-  // width: fit-content;
-  // border-radius: 4px;
-  // background-color: #dee2e6;
 }
 
 .image {
