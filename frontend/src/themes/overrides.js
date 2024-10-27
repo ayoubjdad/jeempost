@@ -119,5 +119,34 @@ export const theme = createTheme({
         root: { fontFamily: "inherit", fontSize: "12px" },
       },
     },
+
+    // * Tabs
+    MuiTabs: {
+      styleOverrides: {
+        root: { borderBottom: "0px" },
+        indicator: {
+          backgroundColor: "#040463",
+          height: "2px",
+        },
+        flexContainer: {
+          justifyContent: "space-between",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          width: "40px",
+          minWidth: "40px",
+          padding: "8px 16px", // Adjust padding
+          "&.Mui-selected": {
+            // color: "#1976d2", // Color of the selected tab
+          },
+          "&:hover": {
+            // color: "#1565c0", // Hover color
+          },
+        },
+      },
+    },
   },
 });

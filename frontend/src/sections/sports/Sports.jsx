@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Sports.module.scss";
 import SectionContainer from "../section-container/SectionContainer";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { gamesUrl, standingsUrl } from "../../api/data";
+import { gamesUrl } from "../../api/data";
 import Game from "../../components/games/game/Game";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import Standings from "./standings/Standings";
@@ -60,19 +60,8 @@ const fetchGames = async () => {
   }
 };
 
-const fetchStandings = async () => {
-  try {
-    const response = await axios.get(standingsUrl);
-    return response?.data?.standings;
-  } catch (error) {
-    console.error("❌", error);
-    return {};
-  }
-};
-
 export default function Sports({ articles }) {
   const { data: games } = useQuery("games", fetchGames, options);
-  const { data: standings } = useQuery("standings", fetchStandings, options);
 
   return (
     <div className={styles.main}>
@@ -103,7 +92,7 @@ export default function Sports({ articles }) {
               <MainArticle article={articles?.[2]} withoutImage withoutDate />
             </div>
             <div className={styles.leftSection}>
-              <Standings standings={standings} />
+              <Standings />
             </div>
           </div>
         </SectionContainer>

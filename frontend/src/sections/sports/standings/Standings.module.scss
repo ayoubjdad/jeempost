@@ -2,6 +2,10 @@
   display: grid;
 }
 
+.leagueLogo {
+  width: 30px;
+}
+
 .header,
 .team {
   display: grid;
@@ -17,8 +21,6 @@
 .header {
   padding: 8px;
   font-size: 8px;
-  // border-radius: 40px;
-  // background-color: #dee2e6;
 }
 
 .team {
