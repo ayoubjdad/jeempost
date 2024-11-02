@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ayoubjdad.github.io/jeempost",
+  "homepage": "https://ayoubjdad.github.io/",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -18,6 +18,7 @@
     "react-dom": "^18.3.1",
     "react-draft-wysiwyg": "^1.15.0",
     "react-query": "^3.39.3",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

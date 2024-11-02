@@ -1,35 +1,14 @@
-.rdw-editor-wrapper {
-  border-radius: 4px !important;
-  border: 1px solid #0000003b !important;
-}
-
-.rdw-editor-main {
-  padding: 12px;
-  direction: rtl;
-  font-size: 12px;
-  min-height: 900px;
-  line-height: 32px;
-  height: 0 !important;
-  div {
-    height: 100%;
-  }
-  p {
-    font-size: 12px;
-  }
-}
-
-.rdw-editor-toolbar {
-  border: none !important;
-  margin-bottom: 0 !important;
-  padding: 12px 8px !important;
-  border-bottom: 1px solid #0000003b !important;
-}
-
-.public-DraftStyleDefault-block {
-  direction: rtl !important;
-}
-
-.public-DraftStyleDefault-ltr {
-  text-align: right !important;
-  margin: 0 !important;
+.ql-editor p,
+.ql-editor ol,
+.ql-editor ul,
+.ql-editor pre,
+.ql-editor blockquote,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  text-align: right;
+  font-family: Alexandria;
 }

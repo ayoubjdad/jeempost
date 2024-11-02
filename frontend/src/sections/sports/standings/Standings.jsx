@@ -78,22 +78,22 @@ export default function Standings() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <StandingTable standings={standings?.[0]} />;
+        <StandingTable standings={standings?.[0]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <StandingTable standings={standings?.[1]} />;
+        <StandingTable standings={standings?.[1]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <StandingTable standings={standings?.[2]} />;
+        <StandingTable standings={standings?.[2]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <StandingTable standings={standings?.[3]} />;
+        <StandingTable standings={standings?.[3]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <StandingTable standings={standings?.[4]} />;
+        <StandingTable standings={standings?.[4]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        <StandingTable standings={standings?.[5]} />;
+        <StandingTable standings={standings?.[5]} />
       </CustomTabPanel>
     </>
   );

@@ -2,153 +2,124 @@ import React, { useState } from "react";
 import styles from "./Editor.module.scss";
 import "./EditorOverrides.scss";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import { convertToRaw, EditorState } from "draft-js";
-import { Editor as DraftEditor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
-import axios from "axios";
-import draftToHtml from "draftjs-to-html";
-import { newsUrl, serverUrl } from "../../api/config";
-
-const toolbar = {
-  options: [
-    "inline",
-    "blockType",
-    "fontSize",
-    "list",
-    "textAlign",
-    "link",
-    "history",
-  ],
-  fontSize: {
-    options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
-  },
-};
+import { useLocation } from "react-router";
+import { useQuery } from "react-query";
+import { fetchNews, saveNews } from "../../helpers/data.helpers";
+import {
+  convertDateToArarbic,
+  convertTimestampToDate,
+} from "../../helpers/global.helper";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Add styles for Quill editor
 
 const Icon = ({ icon }) => (
   <Box component="i" className={`fi fi-rr-${icon} ${styles.clearIcon}`} />
 );
 
 export default function Editor() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [article, setArticle] = useState({
-    id: "",
-    headline: "",
-    subHeadline: "",
-    category: "",
-    content: "",
-    date: Date.now(),
-    image: { src: "", srcset: "" },
-    url: "",
-    author: { name: "جيم بوست", profileUrl: "" },
-    location: "",
-    tags: [],
-    keywords: [],
-    comments: [],
-  });
+  const location = useLocation();
+  const { article: element } = location.state || {};
+  const isEdit = element?.id;
 
-  const onEditorStateChange = (newEditorState) => {
-    setEditorState(newEditorState);
+  const { data: news = [], isLoading: newsLoading } = useQuery(
+    "news",
+    fetchNews,
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+      enabled: !!element?.id,
+    }
+  );
+
+  const articleToEdit = news?.find((article) => article.id === element?.id);
+
+  const [article, setArticle] = useState(
+    isEdit
+      ? articleToEdit
+      : {
+          headline: "",
+          subHeadline: "",
+          category: "",
+          content: "",
+          visibility: "منشور",
+          image: { src: "", srcset: "" },
+          url: "",
+          author: { name: "جيم بوست", profileUrl: "" },
+          location: "",
+          tags: [],
+          keywords: [],
+          comments: [],
+        }
+  );
+
+  const [content, setContent] = useState("");
+
+  /// Full toolbar with RTL option
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      [{ font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      [{ align: [] }],
+      ["blockquote", "code-block"],
+      ["link", "image", "video"],
+      [{ direction: "rtl" }], // Add RTL button here
+      ["clean"],
+    ],
   };
 
-  const onCategoryChange = (e) => {
-    setArticle((prevState) => {
-      return { ...prevState, category: e.target.innerText };
-    });
-  };
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "script",
+    "align",
+    "color",
+    "background",
+    "link",
+    "image",
+    "video",
+    "direction",
+  ];
 
-  const onTitleChange = (e) => {
-    setArticle((prevState) => ({
-      ...prevState,
-      headline: e.target.value,
-      url: `news/19/10/2024/${e.target.value}`,
-    }));
-  };
-
-  // * Handle image upload
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      try {
-        const response = await axios.post(`${serverUrl}/upload`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        const { imageUrl } = response.data;
-        setArticle((prevState) => ({
-          ...prevState,
-          image: { src: imageUrl, srcset: "" },
-        }));
-      } catch (error) {
-        console.error("❌ Error uploading image", error);
-      }
+  const onChange = (key, e) => {
+    try {
+      const value = e.target.value;
+      setArticle((prev) => ({ ...prev, [key]: value }));
+    } catch (error) {
+      console.error("❌", error);
     }
   };
 
-  // * ==========================================================================
-  // * ==========================================================================
+  const handleSave = () => {
+    const newArticles = [...news];
+    let articles = [];
 
-  // const saveArticle = async () => {
-  //   const contentState = editorState.getCurrentContent();
-  //   const rawContent = convertToRaw(contentState);
-  //   const htmlContent = draftToHtml(rawContent);
+    if (!isEdit) {
+      const today = convertTimestampToDate(Date.now());
+      const newArticle = {
+        ...article,
+        url: `/news/${today}/${article.headline}`,
+        content,
+      };
 
-  //   const articleToSave = {
-  //     ...article,
-  //     id: Math.random().toString(36).substring(2, 30),
-  //     image: {
-  //       ...article.image,
-  //       src: "https://i1.hespress.com/wp-content/uploads/2022/12/agricole-agriculture.jpg",
-  //     },
-  //     content: htmlContent,
-  //   };
-
-  //   console.log(":::::: ~ article:", articleToSave);
-  //   // await axios.post(`${newsUrl}/create`, articleToSave);
-  // };
-
-  const saveArticle = async () => {
-    // Upload the image first
-    let imageUrl = "";
-    if (article.image) {
-      const formData = new FormData();
-      formData.append("image", article.image); // Assuming `article.image` is the file object
-
-      try {
-        const response = await axios.post(`${serverUrl}/upload`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        imageUrl = response.data.imageUrl; // Get the image URL from the response
-      } catch (error) {
-        console.error("Image upload failed:", error);
-        return; // Stop the process if the upload fails
-      }
+      articles = [...newArticles, newArticle];
     }
 
-    // Prepare the article data
-    const contentState = editorState.getCurrentContent();
-    const rawContent = convertToRaw(contentState);
-    const htmlContent = draftToHtml(rawContent);
-
-    const articleToSave = {
-      ...article,
-      id: Math.random().toString(36).substring(2, 30),
-      content: htmlContent,
-      image: {
-        src: imageUrl, // Add the uploaded image URL here
-        srcset: "", // If you have a srcset, add it here
-      },
-    };
-
-    console.log(":::::: ~ article:", articleToSave);
-    // await axios.post(`${newsUrl}/create`, articleToSave);
+    saveNews(articles);
   };
 
   return (
@@ -157,15 +128,12 @@ export default function Editor() {
         <div className={styles.editorContainer}>
           <div className={styles.header}>
             <h1>إضافة نص جديد</h1>
-            <div className={styles.headerButtons}>
-              <Button>حفظ</Button>
-              <Button
-                sx={{ backgroundColor: "#040463", color: "white" }}
-                onClick={saveArticle}
-              >
-                نشر
-              </Button>
-            </div>
+            <Button
+              sx={{ backgroundColor: "#040463", color: "white" }}
+              onClick={handleSave}
+            >
+              نشر
+            </Button>
           </div>
         </div>
 
@@ -174,38 +142,67 @@ export default function Editor() {
             <TextField
               variant="outlined"
               placeholder="العنوان"
-              onChange={onTitleChange}
+              defaultValue={article.headline}
+              onBlur={(e) => onChange("headline", e)}
             />
-            <DraftEditor
-              editorState={editorState}
-              wrapperClassName="demo-wrapper"
-              editorClassName="demo-editor"
-              onEditorStateChange={onEditorStateChange}
-              placeholder="اكتب نصا هنا"
-              toolbar={toolbar}
-            />
+
+            <div dir={"rtl"}>
+              <ReactQuill
+                value={content}
+                onChange={setContent}
+                modules={modules}
+                formats={formats}
+                placeholder={"اكتب المحتوى هنا..."}
+                theme="snow"
+              />
+            </div>
           </div>
 
           <div className={styles.params}>
             <div className={styles.param}>
               <p>بتاريخ</p>
-              <TextField variant="outlined" value={article.date} disabled />
+              <TextField
+                variant="outlined"
+                value={convertDateToArarbic(article.date)}
+                disabled
+              />
             </div>
 
             <div className={styles.param}>
-              <p>الموقع</p>
-              <TextField variant="outlined" value={article.location} disabled />
+              <p>الحالة</p>
+              <Autocomplete
+                clearIcon={<Icon icon="cross-small" />}
+                popupIcon={<Icon icon="angle-small-down" />}
+                options={["مسودة", "منشور"]}
+                defaultValue={"منشور"}
+                // getOptionLabel={(option) => option.name}
+                renderInput={(params) => <TextField {...params} />}
+              />
             </div>
 
             <div className={styles.param}>
-              <p>صنف</p>
+              <p>الرابط</p>
+              <TextField
+                variant="outlined"
+                value={"/news/29-10-2024/:headline"}
+                title={"/news/29-10-2024/:headline"}
+                disabled
+              />
+            </div>
+
+            <div className={styles.param}>
+              <p>الكاتب</p>
+              <TextField variant="outlined" disabled value="جيم بوست" />
+            </div>
+
+            <div className={styles.param}>
+              <p>تصنيف</p>
               <Autocomplete
                 clearIcon={<Icon icon="cross-small" />}
                 popupIcon={<Icon icon="angle-small-down" />}
                 options={categories}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} />}
-                onChange={onCategoryChange}
               />
             </div>
 
@@ -222,16 +219,15 @@ export default function Editor() {
                   id="upload-button"
                   accept="image/*"
                   style={{ display: "none" }}
-                  onChange={handleImageUpload}
                 />
               </div>
             </div>
 
             <div className={styles.param}>
               <p></p>
-              {article.image && (
+              {article.image.src && (
                 <div className={styles.imagePreview}>
-                  <img src={article.image} alt="" width="100" />
+                  <img src={article.image.src} alt="" width="100" />
                 </div>
               )}
             </div>

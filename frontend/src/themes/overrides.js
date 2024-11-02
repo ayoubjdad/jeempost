@@ -148,5 +148,50 @@ export const theme = createTheme({
         },
       },
     },
+
+    // *  Table
+    MuiPaper: {
+      root: { boxShadow: "none !important" }, // background-color: #fff;
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          overflow: "hidden",
+          borderRadius: "16px",
+          borderCollapse: "inherit",
+          backgroundColor: "#f9f9f9",
+          border: "1px solid #e0e0e0",
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Alexandria",
+          padding: "12px 24px",
+          fontSize: "12px",
+        },
+        head: {
+          backgroundColor: "#f1f1f1",
+          fontWeight: "bold",
+          color: "#000",
+        },
+        body: {
+          backgroundColor: "#fff",
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:nth-of-type(odd)": {
+            backgroundColor: "#fafafa",
+          },
+          "&:hover": {
+            backgroundColor: "#e0f7fa",
+          },
+        },
+      },
+    },
   },
 });

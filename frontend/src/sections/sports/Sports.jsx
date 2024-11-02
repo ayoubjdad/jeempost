@@ -90,6 +90,8 @@ export default function Sports({ articles }) {
               <MainArticle article={articles?.[2]} withoutImage withoutDate />
               <hr />
               <MainArticle article={articles?.[2]} withoutImage withoutDate />
+              <hr />
+              <MainArticle article={articles?.[2]} withoutImage withoutDate />
             </div>
             <div className={styles.leftSection}>
               <Standings />

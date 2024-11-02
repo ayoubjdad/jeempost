@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 
 const newsSchema = new mongoose.Schema(
   {
-    id: String,
     headline: String,
     subHeadline: String,
     category: String,
     content: String,
-    date: Date,
+    visibility: String,
     image: {
       src: String,
       srcset: String,

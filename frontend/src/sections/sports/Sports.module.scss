@@ -38,16 +38,19 @@
 }
 
 .rightSection {
+  height: fit-content;
   display: grid;
   gap: 16px;
 }
 
 .smallSection {
+  height: fit-content;
   display: flex;
   gap: 16px;
 }
 
 .middleSection {
+  height: fit-content;
   gap: 16px;
   display: grid;
   hr {

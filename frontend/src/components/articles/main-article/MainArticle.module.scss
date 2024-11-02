@@ -26,6 +26,10 @@
 }
 
 .title {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   cursor: pointer;
   font-weight: 700;
   &:hover {

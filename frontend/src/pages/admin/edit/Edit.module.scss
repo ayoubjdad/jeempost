@@ -1,0 +1,36 @@
+.main {
+  margin: 40px 0;
+}
+
+.container {
+  gap: 32px;
+  display: grid;
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.header {
+  gap: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.icon,
+.deleteIcon {
+  padding: 6px;
+  cursor: pointer;
+  transition: 400ms;
+  border-radius: 6px;
+  background-color: #eae7e7;
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.deleteIcon {
+  color: #7a0916;
+  background-color: #ffe9d5;
+  &:hover {
+    background-color: #fcdcbe;
+  }
+}
