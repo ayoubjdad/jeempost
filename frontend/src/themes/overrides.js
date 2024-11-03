@@ -19,13 +19,14 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           gap: "8px",
-          color: "#1e1d1d",
+          color: "white",
           display: "flex",
           fontSize: "12px",
+          boxShadow: "none",
           padding: "6px 12px",
           width: "fit-content",
           fontFamily: "inherit",
-          backgroundColor: "#ececec",
+          backgroundColor: "#040463",
         },
         startIcon: {
           fontSize: "16px",

@@ -11,6 +11,7 @@ import Categories from "./pages/categories/Categories";
 import { useContext } from "react";
 import { CategoriesContext } from "./context/CategoriesContext";
 import Edit from "./pages/admin/edit/Edit";
+import Login from "./pages/login/Login";
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ export default function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/news/:linkDate/:headline" element={<Article />} />
             <Route path="/admin/news/add-new" element={<Editor />} />
             <Route path="/admin/news/edit/:id" element={<Editor />} />
