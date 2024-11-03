@@ -4,7 +4,7 @@ const newsSchema = new mongoose.Schema(
   {
     headline: String,
     subHeadline: String,
-    category: String,
+    categoryId: Number,
     content: String,
     visibility: String,
     image: {

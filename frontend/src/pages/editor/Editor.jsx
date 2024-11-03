@@ -6,13 +6,14 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
 import { useLocation } from "react-router";
 import { useQuery } from "react-query";
-import { fetchNews, saveNews } from "../../helpers/data.helpers";
+import { fetchNews, saveArticle } from "../../helpers/data.helpers";
 import {
   convertDateToArarbic,
   convertTimestampToDate,
 } from "../../helpers/global.helper";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Add styles for Quill editor
+import axios from "axios";
 
 const Icon = ({ icon }) => (
   <Box component="i" className={`fi fi-rr-${icon} ${styles.clearIcon}`} />
@@ -29,7 +30,7 @@ export default function Editor() {
     {
       refetchOnWindowFocus: false,
       retry: false,
-      enabled: !!element?.id,
+      // enabled: !!element?.id,
     }
   );
 
@@ -41,7 +42,7 @@ export default function Editor() {
       : {
           headline: "",
           subHeadline: "",
-          category: "",
+          categoryId: "",
           content: "",
           visibility: "منشور",
           image: { src: "", srcset: "" },
@@ -105,21 +106,17 @@ export default function Editor() {
   };
 
   const handleSave = () => {
-    const newArticles = [...news];
-    let articles = [];
-
-    if (!isEdit) {
+    try {
       const today = convertTimestampToDate(Date.now());
       const newArticle = {
         ...article,
         url: `/news/${today}/${article.headline}`,
         content,
       };
-
-      articles = [...newArticles, newArticle];
+      saveArticle(newArticle);
+    } catch (error) {
+      console.error("❌", error);
     }
-
-    saveNews(articles);
   };
 
   return (
@@ -128,12 +125,7 @@ export default function Editor() {
         <div className={styles.editorContainer}>
           <div className={styles.header}>
             <h1>إضافة نص جديد</h1>
-            <Button
-              sx={{ backgroundColor: "#040463", color: "white" }}
-              onClick={handleSave}
-            >
-              نشر
-            </Button>
+            <Button onClick={handleSave}>نشر</Button>
           </div>
         </div>
 
@@ -163,7 +155,7 @@ export default function Editor() {
               <p>بتاريخ</p>
               <TextField
                 variant="outlined"
-                value={convertDateToArarbic(article.date)}
+                value={convertDateToArarbic(Date.now())}
                 disabled
               />
             </div>
@@ -175,18 +167,7 @@ export default function Editor() {
                 popupIcon={<Icon icon="angle-small-down" />}
                 options={["مسودة", "منشور"]}
                 defaultValue={"منشور"}
-                // getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} />}
-              />
-            </div>
-
-            <div className={styles.param}>
-              <p>الرابط</p>
-              <TextField
-                variant="outlined"
-                value={"/news/29-10-2024/:headline"}
-                title={"/news/29-10-2024/:headline"}
-                disabled
               />
             </div>
 
@@ -200,9 +181,15 @@ export default function Editor() {
               <Autocomplete
                 clearIcon={<Icon icon="cross-small" />}
                 popupIcon={<Icon icon="angle-small-down" />}
-                options={categories}
+                options={categories.slice(1)}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} />}
+                onSelect={(e) => {
+                  const category = categories.find((category) => {
+                    return category.name === e.target.value;
+                  });
+                  onChange("categoryId", { target: { value: category?.id } });
+                }}
               />
             </div>
 

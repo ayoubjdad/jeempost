@@ -42,7 +42,7 @@ export default function MainArticle({
       )}
       {!withoutDate && createdAt && (
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <p className={styles.tag}>{category.name}</p>|
+          <p className={styles.tag}>{category?.name}</p>|
           <p className={styles.time}>{formatedDate}</p>
         </div>
       )}

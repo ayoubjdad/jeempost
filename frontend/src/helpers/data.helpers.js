@@ -6,6 +6,6 @@ export const fetchNews = async () => {
   return response.data;
 };
 
-export const saveNews = async (data) => {
+export const saveArticle = async (data) => {
   await axios.post(newsUrl, data);
 };

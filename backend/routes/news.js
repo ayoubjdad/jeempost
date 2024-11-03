@@ -1,101 +1,40 @@
 const express = require("express");
+const News = require("../models/news"); // Adjust the path as needed
 const router = express.Router();
-const News = require("../models/News");
 
-// * Get all news ====================================================================
+// Route to get all news
 router.get("/", async (req, res) => {
   try {
-    const news = await News.find();
+    const news = await News.find().sort({ createdAt: -1 }); // Sort by latest
     res.status(200).json(news);
   } catch (error) {
-    res.status(500).send("Error fetching news");
+    res.status(500).json({ error: "Failed to fetch news" });
   }
 });
 
-// * Create a new article ====================================================================
-router.post("/news/create", async (req, res) => {
+// Route to get a single news article by ID
+router.get("/:id", async (req, res) => {
   try {
-    const {
-      id,
-      headline,
-      subHeadline,
-      category,
-      content,
-      date,
-      image: { src, srcset },
-      url,
-      author: { name, profileUrl },
-      location,
-      tags,
-      keywords,
-      comments,
-      // : [{ name: authorName, date: commentDate, content: commentContent }],
-    } = req.body;
-
-    const article = new News({
-      id,
-      headline,
-      subHeadline,
-      category,
-      content,
-      date,
-      image: { src, srcset },
-      url,
-      author: { name, profileUrl },
-      location,
-      tags,
-      keywords,
-      comments,
-      // : [{ name: authorName, date: commentDate, content: commentContent }],
-    });
-    await article.save();
-    res.status(201).send("News created");
+    const newsItem = await News.findById(req.params.id);
+    if (!newsItem) {
+      return res.status(404).json({ error: "News article not found" });
+    }
+    res.status(200).json(newsItem);
   } catch (error) {
-    res.status(500).send("Error creating new");
+    res.status(500).json({ error: "Failed to fetch news article" });
   }
 });
 
-// // Edit an existing new
-// router.put("/edit/:id", async (req, res) => {
-//   try {
-//     const { id, alias, email, phone, logo, ice } = req.body;
-
-//     const updatedNew = await News.findByIdAndUpdate(
-//       req.params.id,
-//       {
-//         id,
-//         alias,
-//         email,
-//         phone,
-//         logo,
-//         ice,
-//       },
-//       { new: true }
-//     );
-
-//     if (!updatedNew) {
-//       return res.status(404).send("News not found");
-//     }
-
-//     res.status(200).send("News updated");
-//   } catch (error) {
-//     res.status(500).send("Error updating new");
-//   }
-// });
-
-// // Delete an existing new
-// router.delete("/delete/:id", async (req, res) => {
-//   try {
-//     const deletedNew = await News.findByIdAndDelete(req.params.id);
-
-//     if (!deletedNew) {
-//       return res.status(404).send("News not found");
-//     }
-
-//     res.status(200).send("News deleted");
-//   } catch (error) {
-//     res.status(500).send("Error deleting new");
-//   }
-// });
+// Route to post a new news article
+router.post("/", async (req, res) => {
+  const newsData = req.body;
+  try {
+    const news = new News(newsData);
+    await news.save();
+    res.status(201).json(news);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create news article" });
+  }
+});
 
 module.exports = router;
