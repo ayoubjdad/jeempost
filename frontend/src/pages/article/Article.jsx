@@ -49,7 +49,16 @@ export default function Article() {
             {artcileLocation} | {category.name}
           </p>
           <h1 className={styles.title}>{headline}</h1>
-          <img srcSet={srcset} src={src} alt={headline} />
+          {src ? (
+            <img
+              className={styles.sourceImage}
+              srcSet={srcset}
+              src={src}
+              alt={headline}
+            />
+          ) : (
+            <div className={styles.noSourceImage}>لا توجد صورة</div>
+          )}
           <div>
             <p className={styles.author}>{name}</p>
             <p className={styles.date}>{formatedDate}</p>

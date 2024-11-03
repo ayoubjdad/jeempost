@@ -15,11 +15,22 @@
   gap: 32px;
   display: grid;
   height: fit-content;
-  img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
+}
+
+.sourceImage,
+.noSourceImage {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.noSourceImage {
+  height: 400px;
+  display: flex;
+  color: #6c757d;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
 }
 
 .category,

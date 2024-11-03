@@ -1,14 +1,5 @@
 export const categories = [
   {
-    id: 1,
-    name: "آخر الأخبار",
-    slug: "آخر-الأخبار",
-    isMenu: true,
-    description: "أخبار وتحليلات حول الأحداث السياسية المحلية والدولية",
-    created_at: "2024-09-20T10:15:30Z",
-    updated_at: "2024-09-21T12:45:10Z",
-  },
-  {
     id: 2,
     name: "سياسة",
     slug: "سياسة",
