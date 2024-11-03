@@ -6,12 +6,13 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useQuery } from "react-query";
-import { fetchNews } from "../../../helpers/data.helpers";
+import { useQuery, useQueryClient } from "react-query";
+import { deleteArticle, fetchNews } from "../../../helpers/data.helpers";
 import { categories } from "../../../data/Categories";
 import { convertDateToArarbic } from "../../../helpers/global.helper";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 export default function Edit() {
   const { data: news = [], isLoading } = useQuery("news", fetchNews, {
@@ -20,6 +21,7 @@ export default function Edit() {
   });
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const rows = news?.map((article) => {
     const category = categories.find(
@@ -41,6 +43,24 @@ export default function Edit() {
 
   const addNews = () => {
     navigate("/admin/news/add-new");
+  };
+
+  const onDelete = async (index) => {
+    try {
+      const article = news[index];
+      if (article._id) {
+        deleteArticle(article._id).then(() =>
+          queryClient.setQueryData("news", (oldData) =>
+            oldData.filter((item) => item._id !== article._id)
+          )
+        );
+      }
+
+      alert("Article deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      alert("Failed to delete the article.");
+    }
   };
 
   return (
@@ -67,7 +87,7 @@ export default function Edit() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {rows.map((row, index) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -114,6 +134,7 @@ export default function Edit() {
                     <Box
                       component="i"
                       className={`fi fi-rr-trash ${styles.icon} ${styles.deleteIcon}`}
+                      onClick={() => onDelete(index)}
                     />
                   </TableCell>
                 </TableRow>

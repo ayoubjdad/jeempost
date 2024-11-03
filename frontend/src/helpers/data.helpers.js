@@ -9,3 +9,7 @@ export const fetchNews = async () => {
 export const saveArticle = async (data) => {
   await axios.post(newsUrl, data);
 };
+
+export const deleteArticle = async (id) => {
+  axios.delete(`${newsUrl}/${id}`);
+};
