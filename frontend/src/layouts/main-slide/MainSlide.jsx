@@ -41,7 +41,16 @@ const Articles = ({ posts = [] }) => {
   return (
     <div className={styles.mainSlide}>
       {articles?.map((article, index) => (
-        <SmallArticle index={index} article={article} />
+        <SmallArticle
+          index={index}
+          article={{
+            id: article.id,
+            image: article.image,
+            headline: article.headline,
+            categoryId: article.categoryId,
+            createdAt: article.createdAt,
+          }}
+        />
       ))}
     </div>
   );

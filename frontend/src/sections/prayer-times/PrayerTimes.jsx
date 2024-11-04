@@ -9,6 +9,7 @@ import { Box } from "@mui/material";
 // https://api.aladhan.com/v1/timings/{date}
 const options = {
   refetchOnWindowFocus: false,
+  refetchOnMount: false,
   retry: false,
 };
 

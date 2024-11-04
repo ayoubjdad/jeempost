@@ -11,6 +11,7 @@ import { tournamentsPriority } from "../../data/Tournaments";
 
 const options = {
   refetchOnWindowFocus: false,
+  refetchOnMount: false,
   retry: false,
 };
 

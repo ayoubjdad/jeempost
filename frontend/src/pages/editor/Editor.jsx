@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Editor.module.scss";
 import "./EditorOverrides.scss";
-import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Switch, TextField } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
 import { useLocation } from "react-router";
@@ -30,6 +30,7 @@ export default function Editor() {
     {
       refetchOnWindowFocus: false,
       retry: false,
+      refetchOnMount: false,
       // enabled: !!element?.id,
     }
   );
@@ -44,6 +45,7 @@ export default function Editor() {
           subHeadline: "",
           categoryId: "",
           content: "",
+          isHighlight: false,
           visibility: "منشور",
           image: { src: "", srcset: "" },
           url: "",
@@ -98,8 +100,25 @@ export default function Editor() {
 
   const onChange = (key, e) => {
     try {
-      const value = e.target.value;
+      let value = e.target.value;
+      if (key === "isHighlight") {
+        value = e.target.checked;
+      }
       setArticle((prev) => ({ ...prev, [key]: value }));
+    } catch (error) {
+      console.error("❌", error);
+    }
+  };
+
+  const onSelect = (key, e) => {
+    try {
+      const value = e.target.innerText;
+      const category = categories.find((category) => {
+        return category.name === value;
+      });
+
+      setArticle((prev) => ({ ...prev, [key]: value }));
+      onChange("categoryId", { target: { value: category?.id } });
     } catch (error) {
       console.error("❌", error);
     }
@@ -173,6 +192,11 @@ export default function Editor() {
 
             <div className={styles.param}>
               <p>الكاتب</p>
+              <Switch onChange={(e) => onChange("isHighlight", e)} />
+            </div>
+
+            <div className={styles.param}>
+              <p>الكاتب</p>
               <TextField variant="outlined" disabled value="جيم بوست" />
             </div>
 
@@ -184,12 +208,7 @@ export default function Editor() {
                 options={categories.slice(1)}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} />}
-                onSelect={(e) => {
-                  const category = categories.find((category) => {
-                    return category.name === e.target.value;
-                  });
-                  onChange("categoryId", { target: { value: category?.id } });
-                }}
+                onChange={(e) => onSelect("isHighlight", e)}
               />
             </div>
 

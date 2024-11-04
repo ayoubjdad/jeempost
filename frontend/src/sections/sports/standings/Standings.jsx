@@ -36,11 +36,14 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
 const fetchStandings = async () => {
   try {
     const responses = await Promise.all(
       standingsUrls.map((url) => axios.get(url))
     );
+
+    console.log(":::::: ~ responses:", responses);
     const standings = responses.map((response) => response?.data?.standings);
     return standings;
   } catch (error) {
@@ -52,6 +55,7 @@ const fetchStandings = async () => {
 export default function Standings() {
   const { data: standings } = useQuery("standings", fetchStandings, {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
     retry: false,
   });
 

@@ -12,11 +12,11 @@ import { categories } from "../../../data/Categories";
 import { convertDateToArarbic } from "../../../helpers/global.helper";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import axios from "axios";
 
 export default function Edit() {
-  const { data: news = [], isLoading } = useQuery("news", fetchNews, {
+  const { data: news = [] } = useQuery("news", fetchNews, {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
     retry: false,
   });
 
@@ -33,7 +33,7 @@ export default function Edit() {
       headline: article.headline,
       author: article.author.name,
       createdAt,
-      category: category.name,
+      category: category?.name,
     };
   });
 
@@ -56,7 +56,7 @@ export default function Edit() {
         );
       }
 
-      alert("Article deleted successfully!");
+      alert("تم حذف الخبر!");
     } catch (error) {
       console.error("Error deleting article:", error);
       alert("Failed to delete the article.");
@@ -79,6 +79,7 @@ export default function Edit() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="right" />
                 <TableCell align="right">العنوان</TableCell>
                 <TableCell align="right">الكاتب</TableCell>
                 <TableCell align="right">تصنيف</TableCell>
@@ -92,6 +93,9 @@ export default function Edit() {
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  <TableCell align="right" title={index + 1}>
+                    {index + 1}
+                  </TableCell>
                   <TableCell
                     align="right"
                     style={{

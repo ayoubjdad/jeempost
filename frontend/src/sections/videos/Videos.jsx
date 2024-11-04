@@ -26,6 +26,7 @@ export default function Videos() {
     fetchVideos,
     {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
       retry: false,
     }
   );

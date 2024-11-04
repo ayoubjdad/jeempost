@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 
 const options = {
   refetchOnWindowFocus: false,
+  refetchOnMount: false,
   retry: false,
 };
 const fetchWeather = async () => {

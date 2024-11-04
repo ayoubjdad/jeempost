@@ -18,6 +18,7 @@ export default function Article() {
 
   const { data: posts } = useQuery("news", fetchNews, {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
     retry: false,
   });
 

@@ -23,6 +23,7 @@ export default function Home() {
     fetchNews,
     {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
       retry: false,
     }
   );
