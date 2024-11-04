@@ -1,5 +1,5 @@
 const express = require("express");
-const News = require("../models/news");
+const News = require("../models/News");
 const router = express.Router();
 
 // * Route to get all news

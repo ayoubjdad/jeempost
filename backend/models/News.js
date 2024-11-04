@@ -7,6 +7,7 @@ const newsSchema = new mongoose.Schema(
     categoryId: Number,
     content: String,
     visibility: String,
+    isHighlight: Boolean,
     image: {
       src: String,
       srcset: String,
