@@ -14,28 +14,29 @@ import { fetchNews } from "../../helpers/data.helpers";
 
 export default function Article() {
   const location = useLocation();
-  const { article } = location.state || {};
+  const { id } = location.state || {};
 
-  const { data: posts } = useQuery("news", fetchNews, {
+  const { data: news } = useQuery("news", fetchNews, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     retry: false,
   });
 
-  if (!article) {
+  if (!id) {
     return <p>No article data available.</p>;
   }
 
+  const article = news?.find((article) => article.id === id);
+
   const {
-    id,
-    image: { src, srcset },
-    author: { name = "جيم بوست" },
+    image: { src, srcset } = {}, // Fallback to an empty object if image is undefined
+    author: { name = "جيم بوست" } = {}, // Fallback to an empty object if author is undefined
     headline,
     categoryId,
     content,
-    location: artcileLocation = "المغرب",
+    location: articleLocation = "المغرب",
     createdAt,
-  } = article;
+  } = article || {};
 
   const category = categories.find((category) => category.id === categoryId);
 
@@ -47,7 +48,7 @@ export default function Article() {
       <div className={styles.container}>
         <div className={styles.article}>
           <p className={styles.category}>
-            {artcileLocation} | {category.name}
+            {articleLocation} | {category?.name}
           </p>
           <h1 className={styles.title}>{headline}</h1>
           {src ? (
@@ -74,7 +75,7 @@ export default function Article() {
           <Ad300x250 />
           <SectionContainer title="الأكثر قراءة">
             <div style={{ display: "grid", gap: "16px" }}>
-              {posts?.slice(0, 10)?.map((article, index) => (
+              {news?.slice(0, 10)?.map((article, index) => (
                 <SideArticle index={index} article={article} />
               ))}
             </div>

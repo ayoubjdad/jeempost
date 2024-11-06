@@ -10,8 +10,8 @@ const Categories = ({ category }) => {
   const categoryData = categories.find((cat) => cat.slug === category);
 
   const { data: news, isLoading } = useQuery("news", fetchNews, {
-    refetchOnMount: false,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
     retry: false,
   });
 

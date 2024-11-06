@@ -14,19 +14,16 @@ import PrayerTimes from "../../sections/prayer-times/PrayerTimes";
 import Tags from "../../layouts/tags/Tags";
 import { CategoriesContext } from "../../context/CategoriesContext";
 import { fetchNews } from "../../helpers/data.helpers";
+import Ad728x90 from "../../layouts/ads/728x90/Ad728x90";
 
 export default function Home() {
   const { setCategory } = useContext(CategoriesContext);
 
-  const { data: news = [], isLoading: newsLoading } = useQuery(
-    "news",
-    fetchNews,
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      retry: false,
-    }
-  );
+  const { data: news = [] } = useQuery("news", fetchNews, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    retry: false,
+  });
 
   const mainSlideList = news?.filter((item) => item.isHighlight);
   const economyList = news?.filter((item) => item.categoryId === 3);
@@ -37,7 +34,9 @@ export default function Home() {
   return (
     <div className={styles.main}>
       <MainSlide posts={mainSlideList} />
-
+      {/* <div style={{ margin: "20px 0" }}>
+        <Ad728x90 />
+      </div> */}
       <div className={styles.container}>
         <div className={styles.sections}>
           <div
@@ -101,7 +100,7 @@ const LastNewsSection = ({ lastNewsList = [] }) => {
         className={styles.section}
         style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
       >
-        {lastNewsList?.slice(0, 8)?.map((article, index) => (
+        {lastNewsList?.slice(0, 12)?.map((article, index) => (
           <MainArticle key={index} article={article} />
         ))}
       </div>

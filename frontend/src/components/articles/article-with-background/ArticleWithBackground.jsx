@@ -24,7 +24,7 @@ export default function ArticleWithBackground({ article, key }) {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (

@@ -32,7 +32,7 @@ export default function MainArticle({
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (

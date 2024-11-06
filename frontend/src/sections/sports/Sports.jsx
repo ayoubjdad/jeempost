@@ -62,7 +62,7 @@ const fetchGames = async () => {
 };
 
 export default function Sports({ articles }) {
-  const { data: games } = useQuery("games", fetchGames, options);
+  const { data: games = [] } = useQuery("games", fetchGames, options);
 
   return (
     <div className={styles.main}>

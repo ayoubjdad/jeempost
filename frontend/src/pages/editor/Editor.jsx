@@ -41,6 +41,7 @@ export default function Editor() {
     isEdit
       ? articleToEdit
       : {
+          id: String(Math.random() * 1000000),
           headline: "",
           subHeadline: "",
           categoryId: "",

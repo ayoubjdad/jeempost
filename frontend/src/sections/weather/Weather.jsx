@@ -10,7 +10,12 @@ const options = {
 };
 const fetchWeather = async () => {
   const response = await axios.get(
-    "https://api-business.asharqbusiness.com/api/weather"
+    "https://api-business.asharqbusiness.com/api/weather",
+    {
+      params: {
+        city: "Casablanca", // Assuming the API allows querying by city name
+      },
+    }
   );
   return response.data;
 };
@@ -30,8 +35,8 @@ export default function Weather() {
 
   return (
     <div className={styles.main}>
-      <p className={styles.city}>{weather?.data?.name}</p>
-      <p className={styles.separator}>|</p>
+      {/* <p className={styles.city}>{weather?.data?.name}</p> */}
+      {/* <p className={styles.separator}>|</p> */}
       <p className={styles.temp}>{weather?.data?.temp?.now}</p>
       <p className={styles.separator}>|</p>
       <p className={styles.date}>{arabicDate}</p>

@@ -19,7 +19,7 @@ export default function SideArticle({ index, article = {} }) {
     : "";
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (

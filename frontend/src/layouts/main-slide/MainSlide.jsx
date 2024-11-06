@@ -6,14 +6,14 @@ import { newsFormatDate } from "../../helpers/global.helper";
 
 export default function MainSlide({ posts = [] }) {
   const mainPost = posts?.[0];
-  const { headline, image: { src } = {}, createdAt } = mainPost || {};
+  const { id, headline, image: { src } = {}, createdAt } = mainPost || {};
 
   const navigate = useNavigate();
 
   const linkDate = newsFormatDate(createdAt);
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { article: mainPost } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (

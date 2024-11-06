@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const newsSchema = new mongoose.Schema(
   {
+    id: String,
     headline: String,
     subHeadline: String,
     categoryId: Number,

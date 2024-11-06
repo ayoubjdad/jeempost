@@ -17,6 +17,9 @@ export default function SmallArticle({ index, article = {} }) {
     createdAt,
   } = article || {};
 
+  const slicedHeadline =
+    headline?.length <= 36 ? headline : headline?.slice(0, 36) + "...";
+
   const navigate = useNavigate();
 
   const formatedDate = convertDateToArarbic(createdAt);
@@ -28,7 +31,7 @@ export default function SmallArticle({ index, article = {} }) {
     categories.find((category) => category.id === categoryId) || {};
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { article } });
+    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (
@@ -46,7 +49,7 @@ export default function SmallArticle({ index, article = {} }) {
           </div>
         )}
         <p className={styles.title} onClick={onClick}>
-          {headline}
+          {slicedHeadline}
         </p>
         {content && <p className={styles.description}>{displayedContent}</p>}
       </div>

@@ -43,7 +43,6 @@ const fetchStandings = async () => {
       standingsUrls.map((url) => axios.get(url))
     );
 
-    console.log(":::::: ~ responses:", responses);
     const standings = responses.map((response) => response?.data?.standings);
     return standings;
   } catch (error) {
