@@ -7,7 +7,11 @@ export const fetchNews = async () => {
 };
 
 export const saveArticle = async (data) => {
-  await axios.post(newsUrl, data);
+  try {
+    await axios.post(newsUrl, data);
+  } catch (error) {
+    console.error("❌ Error saving article:", error);
+  }
 };
 
 export const deleteArticle = async (id) => {

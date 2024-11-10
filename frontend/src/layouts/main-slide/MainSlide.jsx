@@ -3,10 +3,12 @@ import styles from "./MainSlide.module.scss";
 import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import { useNavigate } from "react-router";
 import { newsFormatDate } from "../../helpers/global.helper";
+import { serverUrl } from "../../api/config";
 
 export default function MainSlide({ posts = [] }) {
   const mainPost = posts?.[0];
   const { id, headline, image: { src } = {}, createdAt } = mainPost || {};
+  const imageSrc = serverUrl + src;
 
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ export default function MainSlide({ posts = [] }) {
     <div
       className={styles.main}
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${src})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${imageSrc})`,
       }}
     >
       <div className={styles.container}>

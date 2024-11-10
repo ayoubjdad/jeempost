@@ -6,8 +6,9 @@ import {
   newsFormatDate,
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
+import { serverUrl } from "../../../api/config";
 
-export default function ArticleWithBackground({ article, key }) {
+export default function ArticleWithBackground({ article }) {
   const {
     id,
     image: { src },
@@ -15,13 +16,13 @@ export default function ArticleWithBackground({ article, key }) {
     categoryId,
     createdAt,
   } = article;
+  const navigate = useNavigate();
 
   const category = categories.find((category) => category.id === categoryId);
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-
-  const navigate = useNavigate();
+  const imageSrc = serverUrl + src;
 
   const onClick = () => {
     navigate(`/news/${linkDate}/${headline}`, { state: { id } });
@@ -32,7 +33,7 @@ export default function ArticleWithBackground({ article, key }) {
       key={id}
       className={styles.main}
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${src})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${imageSrc})`,
       }}
     >
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>

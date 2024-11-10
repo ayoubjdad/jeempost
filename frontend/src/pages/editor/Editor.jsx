@@ -14,90 +14,134 @@ import {
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Add styles for Quill editor
 import axios from "axios";
+import { serverUrl } from "../../api/config";
 
 const Icon = ({ icon }) => (
   <Box component="i" className={`fi fi-rr-${icon} ${styles.clearIcon}`} />
 );
 
+// * Full toolbar with RTL option
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    [{ font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ align: [] }],
+    ["blockquote", "code-block"],
+    ["link", "image", "video"],
+    [{ direction: "rtl" }], // Add RTL button here
+    ["clean"],
+  ],
+};
+const formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "code-block",
+  "list",
+  "bullet",
+  "script",
+  "align",
+  "color",
+  "background",
+  "link",
+  "image",
+  "video",
+  "direction",
+];
+
 export default function Editor() {
-  const location = useLocation();
-  const { article: element } = location.state || {};
-  const isEdit = element?.id;
+  // const location = useLocation();
+  // const { article: element } = location.state || {};
+  // const isEdit = element?.id;
 
-  const { data: news = [], isLoading: newsLoading } = useQuery(
-    "news",
-    fetchNews,
-    {
-      refetchOnWindowFocus: false,
-      retry: false,
-      refetchOnMount: false,
-      // enabled: !!element?.id,
-    }
-  );
+  // const { data: news = [], isLoading: newsLoading } = useQuery(
+  //   "news",
+  //   fetchNews,
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     retry: false,
+  //     refetchOnMount: false,
+  //     // enabled: !!element?.id,
+  //   }
+  // );
 
-  const articleToEdit = news?.find((article) => article.id === element?.id);
+  // const articleToEdit = news?.find((article) => article.id === element?.id);
 
-  const [article, setArticle] = useState(
-    isEdit
-      ? articleToEdit
-      : {
-          id: String(Math.random() * 1000000),
-          headline: "",
-          subHeadline: "",
-          categoryId: "",
-          content: "",
-          isHighlight: false,
-          visibility: "منشور",
-          image: { src: "", srcset: "" },
-          url: "",
-          author: { name: "جيم بوست", profileUrl: "" },
-          location: "",
-          tags: [],
-          keywords: [],
-          comments: [],
-        }
-  );
+  const defaultArticle = {
+    id: String(Math.random() * 1000000),
+    headline: "",
+    subHeadline: "",
+    categoryId: "",
+    content: "",
+    isHighlight: false,
+    visibility: "منشور",
+    image: { src: "", srcset: "" },
+    url: "",
+    author: { name: "جيم بوست", profileUrl: "" },
+    location: "",
+    tags: [],
+    keywords: [],
+    comments: [],
+  };
+
+  const [article, setArticle] = useState(defaultArticle);
 
   const [content, setContent] = useState("");
 
-  /// Full toolbar with RTL option
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      [{ font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline", "strike"],
-      [{ color: [] }, { background: [] }],
-      [{ script: "sub" }, { script: "super" }],
-      [{ align: [] }],
-      ["blockquote", "code-block"],
-      ["link", "image", "video"],
-      [{ direction: "rtl" }], // Add RTL button here
-      ["clean"],
-    ],
-  };
+  // const handleUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const fileUrl = URL.createObjectURL(file);
+  //     setArticle((prevArticle) => ({
+  //       ...prevArticle,
+  //       image: {
+  //         src: fileUrl, // use the URL for preview
+  //         srcset: "",
+  //       },
+  //     }));
+  //   }
+  // };
 
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "code-block",
-    "list",
-    "bullet",
-    "script",
-    "align",
-    "color",
-    "background",
-    "link",
-    "image",
-    "video",
-    "direction",
-  ];
+  const handleUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const response = await fetch("http://localhost:3000/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Upload failed: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const fileUrl = data.fileUrl.split("/uploads/");
+        setArticle((prevArticle) => ({
+          ...prevArticle,
+          image: {
+            src: "/uploads/" + fileUrl[1],
+            srcset: "",
+          },
+        }));
+      } catch (error) {
+        console.error("Error uploading image:", error.message);
+      }
+    }
+  };
 
   const onChange = (key, e) => {
     try {
@@ -133,7 +177,10 @@ export default function Editor() {
         url: `/news/${today}/${article.headline}`,
         content,
       };
+
       saveArticle(newArticle);
+      alert("تم نشر المقال");
+      setArticle({ ...defaultArticle });
     } catch (error) {
       console.error("❌", error);
     }
@@ -180,7 +227,7 @@ export default function Editor() {
               />
             </div>
 
-            <div className={styles.param}>
+            {/* <div className={styles.param}>
               <p>الحالة</p>
               <Autocomplete
                 clearIcon={<Icon icon="cross-small" />}
@@ -189,16 +236,11 @@ export default function Editor() {
                 defaultValue={"منشور"}
                 renderInput={(params) => <TextField {...params} />}
               />
-            </div>
+            </div> */}
 
             <div className={styles.param}>
-              <p>الكاتب</p>
+              <p>مهم</p>
               <Switch onChange={(e) => onChange("isHighlight", e)} />
-            </div>
-
-            <div className={styles.param}>
-              <p>الكاتب</p>
-              <TextField variant="outlined" disabled value="جيم بوست" />
             </div>
 
             <div className={styles.param}>
@@ -206,11 +248,16 @@ export default function Editor() {
               <Autocomplete
                 clearIcon={<Icon icon="cross-small" />}
                 popupIcon={<Icon icon="angle-small-down" />}
-                options={categories.slice(1)}
+                options={categories}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} />}
-                onChange={(e) => onSelect("isHighlight", e)}
+                onChange={(e) => onSelect("categoryId", e)}
               />
+            </div>
+
+            <div className={styles.param}>
+              <p>الكاتب</p>
+              <TextField variant="outlined" disabled value="جيم بوست" />
             </div>
 
             <div className={styles.param}>
@@ -226,6 +273,7 @@ export default function Editor() {
                   id="upload-button"
                   accept="image/*"
                   style={{ display: "none" }}
+                  onChange={handleUpload} // Add this to handle file changes
                 />
               </div>
             </div>
@@ -234,7 +282,7 @@ export default function Editor() {
               <p></p>
               {article.image.src && (
                 <div className={styles.imagePreview}>
-                  <img src={article.image.src} alt="" width="100" />
+                  <img src={article.image.src} alt="Preview" width="100" />
                 </div>
               )}
             </div>

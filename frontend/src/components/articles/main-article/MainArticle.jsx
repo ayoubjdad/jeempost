@@ -6,6 +6,7 @@ import {
   newsFormatDate,
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
+import { serverUrl } from "../../../api/config";
 
 export default function MainArticle({
   article = {},
@@ -28,6 +29,7 @@ export default function MainArticle({
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
+  const imageSrc = serverUrl + src;
   const displayedContent =
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
@@ -39,7 +41,7 @@ export default function MainArticle({
     <div key={id || key} className={styles.main}>
       {!withoutImage &&
         (src ? (
-          <img alt="" srcSet={srcset} className={styles.image} src={src} />
+          <img alt="" srcSet={srcset} className={styles.image} src={imageSrc} />
         ) : (
           <div className={styles.noSourceImage}>لا توجد صورة</div>
         ))}

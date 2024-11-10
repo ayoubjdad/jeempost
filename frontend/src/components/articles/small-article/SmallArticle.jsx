@@ -6,6 +6,7 @@ import {
   newsFormatDate,
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
+import { serverUrl } from "../../../api/config";
 
 export default function SmallArticle({ index, article = {} }) {
   const {
@@ -17,6 +18,7 @@ export default function SmallArticle({ index, article = {} }) {
     createdAt,
   } = article || {};
 
+  const imageSrc = serverUrl + src;
   const slicedHeadline =
     headline?.length <= 36 ? headline : headline?.slice(0, 36) + "...";
 
@@ -36,7 +38,12 @@ export default function SmallArticle({ index, article = {} }) {
 
   return (
     <div key={id || index} className={styles.main}>
-      <img alt={headline} srcSet={srcset} className={styles.image} src={src} />
+      <img
+        alt={headline}
+        srcSet={srcset}
+        className={styles.image}
+        src={imageSrc}
+      />
       <div className={styles.text}>
         {(category?.name || formatedDate) && (
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
