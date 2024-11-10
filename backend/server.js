@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const newsRoutes = require("./routes/news");
-const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -29,7 +28,6 @@ mongoose
 
 // Routes
 app.use("/news", newsRoutes);
-app.use("/api", authRoutes); // Use authentication routes
 
 // Root endpoint
 app.get("/", (req, res) => {
