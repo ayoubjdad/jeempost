@@ -27,7 +27,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/news/:linkDate/:headline" element={<Article />} />
             <Route path="/admin/news/add-new" element={<Editor />} />
-            <Route path="/admin/news/edit/:id" element={<Editor />} />
+            {/* <Route path="/admin/news/edit/:id" element={<Editor />} /> */}
             <Route path="/admin/news/edit" element={<Edit />} />
             <Route
               path={`/${category}`}
