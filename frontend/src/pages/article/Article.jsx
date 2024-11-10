@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
 import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
 import { fetchNews } from "../../helpers/data.helpers";
+import { serverUrl } from "../../api/config";
 
 export default function Article() {
   const location = useLocation();
@@ -40,6 +41,7 @@ export default function Article() {
 
   const category = categories.find((category) => category.id === categoryId);
 
+  const imageSrc = serverUrl + src;
   const formatedDate = convertDateToArarbic(createdAt);
 
   return (
@@ -51,11 +53,11 @@ export default function Article() {
             {articleLocation} | {category?.name}
           </p>
           <h1 className={styles.title}>{headline}</h1>
-          {src ? (
+          {imageSrc ? (
             <img
               className={styles.sourceImage}
               srcSet={srcset}
-              src={src}
+              src={imageSrc}
               alt={headline}
             />
           ) : (

@@ -79,20 +79,23 @@ export default function Sports({ articles }) {
           </div>
           <div className={styles.sections}>
             <div className={styles.rightSection}>
-              <MainArticle article={articles[0]} withoutDate />
               <div className={styles.smallSection}>
-                <MainArticle article={articles[4]} withoutDate />
-                <MainArticle article={articles[5]} withoutDate />
+                <MainArticle article={articles[0]} withoutDate />
+                <MainArticle article={articles[1]} withoutDate />
+              </div>
+              <div className={styles.smallSection}>
+                <MainArticle article={articles[2]} withoutDate />
+                <MainArticle article={articles[3]} withoutDate />
               </div>
             </div>
             <div className={styles.middleSection}>
-              <MainArticle article={articles?.[1]} withoutImage withoutDate />
+              <MainArticle article={articles?.[4]} withoutImage withoutDate />
               <hr />
-              <MainArticle article={articles?.[2]} withoutImage withoutDate />
+              <MainArticle article={articles?.[5]} withoutImage withoutDate />
               <hr />
-              <MainArticle article={articles?.[2]} withoutImage withoutDate />
+              <MainArticle article={articles?.[6]} withoutImage withoutDate />
               <hr />
-              <MainArticle article={articles?.[2]} withoutImage withoutDate />
+              <MainArticle article={articles?.[7]} withoutImage withoutDate />
             </div>
             <div className={styles.leftSection}>
               <Standings />
