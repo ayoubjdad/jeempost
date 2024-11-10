@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
 
 const newsRoutes = require("./routes/news");
 const authRoutes = require("./routes/auth");
