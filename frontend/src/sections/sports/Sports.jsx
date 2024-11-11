@@ -33,28 +33,45 @@ const isToday = (timestamp) => {
   return formatTimestampToDate(today) === formatTimestampToDate(gameDate);
 };
 
-const filterGamesByPriority = (games) => {
+const filterGamesByPriority = (games, gamesToShow) => {
   try {
-    const prioritizedGames = tournamentsPriority.flatMap((tour) => {
-      return games.filter(
-        (game) =>
-          game.tournament.uniqueTournament.id === tour.id &&
-          isToday(game.startTimestamp)
-      );
-    });
-    return prioritizedGames;
+    const prioritizedGames = [];
+    const nonPrioritizedGames = new Set();
+
+    const priorityIds = new Set(tournamentsPriority.map((tour) => tour.id));
+
+    for (const game of games) {
+      if (!isToday(game.startTimestamp)) continue; // Skip non-today games
+
+      if (priorityIds.has(game.tournament.uniqueTournament.id)) {
+        if (prioritizedGames.length < gamesToShow) {
+          prioritizedGames.push(game);
+        }
+      } else if (
+        nonPrioritizedGames.size <
+        gamesToShow - prioritizedGames.length
+      ) {
+        nonPrioritizedGames.add(game);
+      }
+
+      if (prioritizedGames.length + nonPrioritizedGames.size >= gamesToShow) {
+        break;
+      }
+    }
+
+    return [...prioritizedGames, ...nonPrioritizedGames];
   } catch (error) {
     console.error("❌", error);
     return [];
   }
 };
 
-const fetchGames = async () => {
+const fetchGames = async (gamesToShow) => {
   try {
     const url = gamesUrl + formatDate(new Date(Date.now()));
     const response = await axios.get(url);
 
-    return filterGamesByPriority(response?.data?.events);
+    return filterGamesByPriority(response?.data?.events, gamesToShow);
   } catch (error) {
     console.error("❌", error);
     return {};
@@ -62,7 +79,13 @@ const fetchGames = async () => {
 };
 
 export default function Sports({ articles }) {
-  const { data: games = [] } = useQuery("games", fetchGames, options);
+  const gamesToShow = 6;
+
+  const { data: games = [] } = useQuery(
+    "games",
+    () => fetchGames(gamesToShow),
+    options
+  );
 
   return (
     <div className={styles.main}>
@@ -73,7 +96,7 @@ export default function Sports({ articles }) {
           style={{ gap: "32px", display: "grid" }}
         >
           <div className={styles.games}>
-            {games?.slice(0, 6)?.map((game) => (
+            {games?.slice(0, gamesToShow)?.map((game) => (
               <Game game={game} />
             ))}
           </div>
