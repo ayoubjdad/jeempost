@@ -6,13 +6,19 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 
-const uploadRoutes = require("./routes/upload"); // Assuming upload.js contains the upload route
+const uploadRoutes = require("./routes/upload");
 const newsRoutes = require("./routes/news");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CONNECTION_STRING = process.env.CONNECTION_STRING;
 const DATABASENAME = process.env.DATABASENAME;
+
+// Ensure the 'uploads' directory exists
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 // Middleware
 app.use(cors());
@@ -32,13 +38,7 @@ mongoose
 
 // Routes
 app.use("/news", newsRoutes);
-app.use("/api", uploadRoutes); // This mounts the upload routes under "/api/upload"
-
-// Ensure the uploads directory exists
-const uploadsDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-}
+app.use("/api", uploadRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Root endpoint

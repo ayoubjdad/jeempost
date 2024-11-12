@@ -94,52 +94,35 @@ export default function Editor() {
   };
 
   const [article, setArticle] = useState(defaultArticle);
-
+  const [imageUrl, setImageUrl] = useState(null);
   const [content, setContent] = useState("");
 
-  // const handleUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const fileUrl = URL.createObjectURL(file);
-  //     setArticle((prevArticle) => ({
-  //       ...prevArticle,
-  //       image: {
-  //         src: fileUrl, // use the URL for preview
-  //         srcset: "",
-  //       },
-  //     }));
-  //   }
-  // };
-
+  // Function to handle file upload input
   const handleUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
+      const url = await uploadImage(file);
+      setImageUrl(url);
+    }
+  };
 
-      try {
-        const response = await fetch("http://localhost:3000/api/upload", {
-          method: "POST",
-          body: formData,
-        });
+  // Function to upload the image to the server and get the URL
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Upload failed: ${errorText}`);
+    try {
+      const response = await axios.post(
+        serverUrl + "/api/upload/image",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
         }
-
-        const data = await response.json();
-        const fileUrl = data.fileUrl.split("/uploads/");
-        setArticle((prevArticle) => ({
-          ...prevArticle,
-          image: {
-            src: "/uploads/" + fileUrl[1],
-            srcset: "",
-          },
-        }));
-      } catch (error) {
-        console.error("Error uploading image:", error.message);
-      }
+      );
+      return response.data.imageUrl;
+    } catch (error) {
+      console.error("❌ Error uploading image:", error);
+      return null;
     }
   };
 
@@ -169,20 +152,24 @@ export default function Editor() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     try {
       const today = convertTimestampToDate(Date.now());
+
       const newArticle = {
         ...article,
         url: `/news/${today}/${article.headline}`,
         content,
+        image: { ...article.image, src: imageUrl }, // Store only the URL of the uploaded image
       };
 
-      saveArticle(newArticle);
+      await saveArticle(newArticle);
       alert("تم نشر المقال");
       setArticle({ ...defaultArticle });
+      setContent("");
+      setImageUrl(null); // Reset the image file after saving
     } catch (error) {
-      console.error("❌", error);
+      console.error("❌ Error in handleSave:", error);
     }
   };
 
@@ -273,16 +260,16 @@ export default function Editor() {
                   id="upload-button"
                   accept="image/*"
                   style={{ display: "none" }}
-                  onChange={handleUpload} // Add this to handle file changes
+                  onChange={handleUpload}
                 />
               </div>
             </div>
 
             <div className={styles.param}>
               <p></p>
-              {article.image.src && (
+              {imageUrl && (
                 <div className={styles.imagePreview}>
-                  <img src={article.image.src} alt="Preview" width="100" />
+                  <img src={serverUrl + imageUrl} alt="Preview" width="100" />
                 </div>
               )}
             </div>

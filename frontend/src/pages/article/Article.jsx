@@ -53,7 +53,7 @@ export default function Article() {
             {articleLocation} | {category?.name}
           </p>
           <h1 className={styles.title}>{headline}</h1>
-          {imageSrc ? (
+          {src ? (
             <img
               className={styles.sourceImage}
               srcSet={srcset}
