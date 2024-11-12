@@ -4,13 +4,22 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { CategoriesProvider } from "./context/CategoriesContext";
+import { DataProvider } from "./context/DataProvider";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <CategoriesProvider>
-      <App />
-    </CategoriesProvider>
+    <QueryClientProvider client={queryClient}>
+      <DataProvider>
+        <CategoriesProvider>
+          <App />
+        </CategoriesProvider>
+      </DataProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

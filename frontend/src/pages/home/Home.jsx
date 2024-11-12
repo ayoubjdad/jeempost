@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styles from "./Home.module.scss";
-import { useQuery } from "react-query";
 import ArticleWithBackground from "../../components/articles/article-with-background/ArticleWithBackground";
 import SmallArticle from "../../components/articles/small-article/SmallArticle";
 import MainArticle from "../../components/articles/main-article/MainArticle";
@@ -13,17 +12,11 @@ import { categories } from "../../data/Categories";
 import PrayerTimes from "../../sections/prayer-times/PrayerTimes";
 import Tags from "../../layouts/tags/Tags";
 import { CategoriesContext } from "../../context/CategoriesContext";
-import { fetchNews } from "../../helpers/data.helpers";
-import Ad728x90 from "../../layouts/ads/728x90/Ad728x90";
+import { DataContext } from "../../context/DataProvider";
 
 export default function Home() {
   const { setCategory } = useContext(CategoriesContext);
-
-  const { data: news = [] } = useQuery("news", fetchNews, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+  const { news } = useContext(DataContext);
 
   const mainSlideList = news?.filter((item) => item.isHighlight);
   const economyList = news?.filter((item) => item.categoryId === 3);

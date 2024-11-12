@@ -103,22 +103,23 @@ export default function Sports({ articles }) {
           <div className={styles.sections}>
             <div className={styles.rightSection}>
               <div className={styles.smallSection}>
-                <MainArticle article={articles[0]} withoutDate />
-                <MainArticle article={articles[1]} withoutDate />
+                {articles?.slice(0, 2).map((article) => (
+                  <MainArticle article={article} withoutDate />
+                ))}
               </div>
               <div className={styles.smallSection}>
-                <MainArticle article={articles[2]} withoutDate />
-                <MainArticle article={articles[3]} withoutDate />
+                {articles?.slice(2, 2).map((article) => (
+                  <MainArticle article={article} withoutDate />
+                ))}
               </div>
             </div>
             <div className={styles.middleSection}>
-              <MainArticle article={articles?.[4]} withoutImage withoutDate />
-              <hr />
-              <MainArticle article={articles?.[5]} withoutImage withoutDate />
-              <hr />
-              <MainArticle article={articles?.[6]} withoutImage withoutDate />
-              <hr />
-              <MainArticle article={articles?.[7]} withoutImage withoutDate />
+              {articles?.slice(4, 4).map((article) => (
+                <>
+                  <MainArticle article={article} withoutDate />
+                  <hr />
+                </>
+              ))}
             </div>
             <div className={styles.leftSection}>
               <Standings />

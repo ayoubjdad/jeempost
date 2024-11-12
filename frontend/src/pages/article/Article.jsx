@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Article.module.scss";
 import Ad300x250 from "../../layouts/ads/300x250/Ad300x250";
 import Tags from "../../layouts/tags/Tags";
@@ -7,21 +7,16 @@ import { useLocation } from "react-router";
 import { convertDateToArarbic } from "../../helpers/global.helper";
 import SectionContainer from "../../sections/section-container/SectionContainer";
 import SideArticle from "../../components/articles/side-article/SideArticle";
-import { useQuery } from "react-query";
 import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
 import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
-import { fetchNews } from "../../helpers/data.helpers";
 import { serverUrl } from "../../api/config";
+import { DataContext } from "../../context/DataProvider";
 
 export default function Article() {
   const location = useLocation();
   const { id } = location.state || {};
 
-  const { data: news } = useQuery("news", fetchNews, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+  const { news } = useContext(DataContext);
 
   if (!id) {
     return <p>No article data available.</p>;

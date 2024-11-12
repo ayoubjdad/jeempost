@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Edit.module.scss";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,19 +6,16 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useQuery, useQueryClient } from "react-query";
-import { deleteArticle, fetchNews } from "../../../helpers/data.helpers";
+import { useQueryClient } from "react-query";
+import { deleteArticle } from "../../../helpers/data.helpers";
 import { categories } from "../../../data/Categories";
 import { convertDateToArarbic } from "../../../helpers/global.helper";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router";
+import { DataContext } from "../../../context/DataProvider";
 
 export default function Edit() {
-  const { data: news = [] } = useQuery("news", fetchNews, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+  const { news } = useContext(DataContext);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();

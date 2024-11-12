@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Categories.module.scss";
-import { useQuery } from "react-query";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import SectionContainer from "../../sections/section-container/SectionContainer";
 import { categories } from "../../data/Categories";
-import { fetchNews } from "../../helpers/data.helpers";
+import { DataContext } from "../../context/DataProvider";
 
 const Categories = ({ category }) => {
-  const categoryData = categories.find((cat) => cat.slug === category);
+  const { news, isNewsLoading } = useContext(DataContext);
 
-  const { data: news, isLoading } = useQuery("news", fetchNews, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+  const categoryData = categories.find((cat) => cat.slug === category);
 
   const newsList = news?.filter((post) => post.categoryId === categoryData?.id);
 
@@ -24,11 +19,11 @@ const Categories = ({ category }) => {
           <div
             className={styles.section}
             style={{
-              gridTemplateColumns: isLoading && "1fr",
-              justifyItems: isLoading && "center",
+              gridTemplateColumns: isNewsLoading && "1fr",
+              justifyItems: isNewsLoading && "center",
             }}
           >
-            {isLoading ? (
+            {isNewsLoading ? (
               <div className={styles.loader} />
             ) : (
               newsList?.map((article) => (
