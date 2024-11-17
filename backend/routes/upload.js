@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -15,6 +16,26 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+// Endpoint to list all uploaded images
+router.get("/images", (req, res) => {
+  const uploadsDir = path.join(__dirname, "uploads");
+
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+
+  fs.readdir(uploadsDir, (err, files) => {
+    if (err) {
+      console.error("Error reading uploads directory:", err);
+      return res.status(500).json({ error: "Could not retrieve images" });
+    }
+
+    // Return a list of image URLs
+    const imageUrls = files.map((file) => `/uploads/${file}`);
+    res.json({ images: imageUrls });
+  });
+});
 
 // * Define the route for uploading an image
 router.post("/upload/image", upload.single("image"), (req, res) => {
