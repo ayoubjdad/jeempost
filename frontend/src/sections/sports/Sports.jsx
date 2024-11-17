@@ -7,7 +7,7 @@ import { gamesUrl } from "../../api/data";
 import Game from "../../components/games/game/Game";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import Standings from "./standings/Standings";
-import { tournamentsPriority } from "../../data/Tournaments";
+import { teamsToSkip, tournamentsPriority } from "../../data/Tournaments";
 
 const options = {
   refetchOnWindowFocus: false,
@@ -39,19 +39,22 @@ const filterGamesByPriority = (games, gamesToShow) => {
     const nonPrioritizedGames = new Set();
 
     const priorityIds = new Set(tournamentsPriority.map((tour) => tour.id));
+    const skipIds = new Set(teamsToSkip.map((tour) => tour.id));
 
     for (const game of games) {
       if (!isToday(game.startTimestamp)) continue; // Skip non-today games
 
-      if (priorityIds.has(game.tournament.uniqueTournament.id)) {
-        if (prioritizedGames.length < gamesToShow) {
-          prioritizedGames.push(game);
+      if (!skipIds.has(game.awayTeam.id) && !skipIds.has(game.homeTeam.id)) {
+        if (priorityIds.has(game.tournament.uniqueTournament.id)) {
+          if (prioritizedGames.length < gamesToShow) {
+            prioritizedGames.push(game);
+          }
+        } else if (
+          nonPrioritizedGames.size <
+          gamesToShow - prioritizedGames.length
+        ) {
+          nonPrioritizedGames.add(game);
         }
-      } else if (
-        nonPrioritizedGames.size <
-        gamesToShow - prioritizedGames.length
-      ) {
-        nonPrioritizedGames.add(game);
       }
 
       if (prioritizedGames.length + nonPrioritizedGames.size >= gamesToShow) {

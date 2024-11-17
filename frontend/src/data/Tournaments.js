@@ -115,3 +115,5 @@ export const topTeams = [
   { name: "Flamengo", id: 47 },
   { name: "Corinthians", id: 48 },
 ];
+
+export const teamsToSkip = [{ name: "Israel", id: 4480 }];
