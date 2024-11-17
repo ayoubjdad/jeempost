@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { CategoriesContext } from "./context/CategoriesContext";
 import Edit from "./pages/admin/edit/Edit";
 import Login from "./pages/login/Login";
+import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
+          <ScrollToTop />
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
