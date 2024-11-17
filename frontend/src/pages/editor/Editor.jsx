@@ -4,9 +4,8 @@ import "./EditorOverrides.scss";
 import { Autocomplete, Box, Button, Switch, TextField } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
-import { useLocation } from "react-router";
 import { useQuery } from "react-query";
-import { fetchNews, saveArticle } from "../../helpers/data.helpers";
+import { saveArticle } from "../../helpers/data.helpers";
 import {
   convertDateToArarbic,
   convertTimestampToDate,
@@ -58,23 +57,21 @@ const formats = [
   "direction",
 ];
 
+const fetchImages = async () => {
+  try {
+    const response = await axios.get(serverUrl + "/api/images");
+    return response.data.images;
+  } catch (error) {
+    console.error("Error fetching images:", error);
+  }
+};
+
 export default function Editor() {
-  // const location = useLocation();
-  // const { article: element } = location.state || {};
-  // const isEdit = element?.id;
-
-  // const { data: news = [], isLoading: newsLoading } = useQuery(
-  //   "news",
-  //   fetchNews,
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     retry: false,
-  //     refetchOnMount: false,
-  //     // enabled: !!element?.id,
-  //   }
-  // );
-
-  // const articleToEdit = news?.find((article) => article.id === element?.id);
+  const { data: images } = useQuery("images", fetchImages, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    retry: false,
+  });
 
   const defaultArticle = {
     id: String(Math.random() * 1000000),
