@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./ArticleWithBackground.module.scss";
 import { categories } from "../../../data/Categories";
 import {
@@ -7,8 +7,12 @@ import {
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 import { serverUrl } from "../../../api/config";
+import { DataContext } from "../../../context/DataProvider";
 
 export default function ArticleWithBackground({ article }) {
+  const navigate = useNavigate();
+  const { images } = useContext(DataContext);
+
   const {
     id,
     image: { src },
@@ -16,13 +20,12 @@ export default function ArticleWithBackground({ article }) {
     categoryId,
     createdAt,
   } = article;
-  const navigate = useNavigate();
 
   const category = categories.find((category) => category.id === categoryId);
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = serverUrl + src;
+  const imageSrc = images?.includes(src) ? serverUrl + src : null;
 
   const onClick = () => {
     navigate(`/news/${linkDate}/${headline}`, { state: { id } });

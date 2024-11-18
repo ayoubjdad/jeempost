@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { CategoriesProvider } from "./context/CategoriesContext";
 import { DataProvider } from "./context/DataProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { UserProvider } from "./context/UserProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -14,11 +15,13 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <DataProvider>
-        <CategoriesProvider>
-          <App />
-        </CategoriesProvider>
-      </DataProvider>
+      <UserProvider>
+        <DataProvider>
+          <CategoriesProvider>
+            <App />
+          </CategoriesProvider>
+        </DataProvider>
+      </UserProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

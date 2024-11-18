@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./MainArticle.module.scss";
 import { categories } from "../../../data/Categories";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 import { serverUrl } from "../../../api/config";
+import { DataContext } from "../../../context/DataProvider";
 
 export default function MainArticle({
   article = {},
@@ -15,6 +16,8 @@ export default function MainArticle({
   withoutDate = false,
 }) {
   const navigate = useNavigate();
+
+  const { images } = useContext(DataContext);
 
   const {
     id,
@@ -29,7 +32,7 @@ export default function MainArticle({
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = serverUrl + src;
+  const imageSrc = images?.includes(src) ? serverUrl + src : null;
   const displayedContent =
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
@@ -40,7 +43,7 @@ export default function MainArticle({
   return (
     <div key={id || key} className={styles.main}>
       {!withoutImage &&
-        (src ? (
+        (imageSrc ? (
           <img alt="" srcSet={srcset} className={styles.image} src={imageSrc} />
         ) : (
           <div className={styles.noSourceImage}>لا توجد صورة</div>

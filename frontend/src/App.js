@@ -1,5 +1,10 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 import Home from "./pages/home/Home";
 import Header from "./layouts/header/Header";
 import Footer from "./layouts/footer/Footer";
@@ -13,6 +18,8 @@ import { CategoriesContext } from "./context/CategoriesContext";
 import Edit from "./pages/admin/edit/Edit";
 import Login from "./pages/login/Login";
 import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
+import { UserContext } from "./context/UserProvider";
+import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -23,22 +30,37 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <ScrollToTop />
-          <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/news/:linkDate/:headline" element={<Article />} />
-            <Route path="/admin/news/add-new" element={<Editor />} />
-            {/* <Route path="/admin/news/edit/:id" element={<Editor />} /> */}
-            <Route path="/admin/news/edit" element={<Edit />} />
-            <Route
-              path={`/${category}`}
-              element={<Categories category={category} />}
-            />
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/news/:linkDate/:headline" element={<Article />} />
+              <Route path="/admin/news/add-new" element={<Editor />} />
+              {/* <Route
+                path="/admin/news/add-new"
+                element={<ProtectedRoute element={<Editor />} />}
+              /> */}
+              <Route path="/admin/news/edit" element={<Edit />} />
+              <Route
+                path={`/${category}`}
+                element={<Categories category={category} />}
+              />
+            </Route>
           </Routes>
-          <Footer />
         </Router>
       </ThemeProvider>
     </QueryClientProvider>
+  );
+}
+
+function MainLayout() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
   );
 }

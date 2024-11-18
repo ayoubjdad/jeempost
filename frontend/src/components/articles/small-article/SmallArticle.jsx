@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./SmallArticle.module.scss";
 import { categories } from "../../../data/Categories";
 import {
@@ -7,8 +7,11 @@ import {
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 import { serverUrl } from "../../../api/config";
+import { DataContext } from "../../../context/DataProvider";
 
 export default function SmallArticle({ index, article = {} }) {
+  const { images } = useContext(DataContext);
+
   const {
     id,
     image: { src, srcset } = {},
@@ -18,7 +21,7 @@ export default function SmallArticle({ index, article = {} }) {
     createdAt,
   } = article || {};
 
-  const imageSrc = serverUrl + src;
+  const imageSrc = images?.includes(src) ? serverUrl + src : null;
   const slicedHeadline =
     headline?.length <= 36 ? headline : headline?.slice(0, 36) + "...";
 

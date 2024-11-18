@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Login.module.scss";
 import { Button, TextField } from "@mui/material";
-import axios from "axios";
-import { serverUrl } from "../../api/config";
+import { UserContext } from "../../context/UserProvider";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const { setConnected } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${serverUrl}/api/login`, {
-        username,
-        password,
-      });
-      alert(response.data.message);
-    } catch (err) {
-      setError(err.response?.data.message || "Login failed");
+      if (!username || !password) {
+        setError("Login failed");
+        return;
+      }
+
+      const usernames = [process.env.USERNAME, process.env.USERNAME2];
+      const passwords = [process.env.PASSWORD, process.env.PASSWORD2];
+      if (
+        usernames.some((item) => item === username) &&
+        passwords.some((item) => item === password)
+      ) {
+        setError("Login failed");
+        return;
+      }
+
+      setConnected(true);
+      navigate("/admin/news/add-new"); // Redirect to the desired route
+    } catch (error) {
+      setError("Login failed");
+      return;
     }
   };
 

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./SideArticle.module.scss";
 import { newsFormatDate } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 import { serverUrl } from "../../../api/config";
+import { DataContext } from "../../../context/DataProvider";
 
 export default function SideArticle({ index, article = {} }) {
+  const navigate = useNavigate();
+  const { images } = useContext(DataContext);
+
   const {
     id,
     image: { src, srcset } = {},
@@ -12,10 +16,8 @@ export default function SideArticle({ index, article = {} }) {
     createdAt,
   } = article || {};
 
-  const navigate = useNavigate();
-
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = serverUrl + src;
+  const imageSrc = images?.includes(src) ? serverUrl + src : null;
   const displayedContent = headline
     ? headline.slice(0, 56) + (headline.length > 56 ? "..." : "")
     : "";
