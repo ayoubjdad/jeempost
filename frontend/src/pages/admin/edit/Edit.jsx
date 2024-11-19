@@ -46,11 +46,9 @@ export default function Edit() {
     try {
       const article = news[index];
       if (article._id) {
-        deleteArticle(article._id).then(() =>
-          queryClient.setQueryData("news", (oldData) =>
-            oldData.filter((item) => item._id !== article._id)
-          )
-        );
+        await deleteArticle(article._id);
+        const newData = news.filter((item) => item._id !== article._id);
+        queryClient.setQueryData("news", newData);
       }
 
       alert("تم حذف الخبر!");

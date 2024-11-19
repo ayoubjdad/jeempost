@@ -67,8 +67,19 @@
   height: fit-content;
 }
 
+.section {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 @media (max-width: 575.98px) {
   .smallSection {
     display: none;
+  }
+
+  .container {
+    padding: 0 20px;
+    grid-template-columns: 1fr !important;
   }
 }

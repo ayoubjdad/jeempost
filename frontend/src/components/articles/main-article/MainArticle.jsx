@@ -32,7 +32,9 @@ export default function MainArticle({
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = serverUrl + src;
+  // const imageSrc = serverUrl + src;
+  const imageSrc = new URL(src, serverUrl).href;
+
   const displayedContent =
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
@@ -42,15 +44,13 @@ export default function MainArticle({
 
   return (
     <div key={id} className={styles.main}>
-      {
-        !withoutImage && (
-          // (imageSrc ? (
+      {!withoutImage ? (
+        imageSrc ? (
           <img alt="" srcSet={srcset} className={styles.image} src={imageSrc} />
+        ) : (
+          <div className={styles.noSourceImage}>لا توجد صورة</div>
         )
-        // ) : (
-        //   <div className={styles.noSourceImage}>لا توجد صورة</div>
-        // ))
-      }
+      ) : null}
       {!withoutDate && createdAt && (
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <p className={styles.tag}>{category?.name}</p>|

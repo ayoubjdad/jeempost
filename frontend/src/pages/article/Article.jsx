@@ -11,6 +11,7 @@ import Ad970x250 from "../../layouts/ads/970x250/Ad970x250";
 import Ad300x600 from "../../layouts/ads/300x600/Ad300x600";
 import { serverUrl } from "../../api/config";
 import { DataContext } from "../../context/DataProvider";
+import ArticleWithBackground from "../../components/articles/article-with-background/ArticleWithBackground";
 
 export default function Article() {
   const location = useLocation();
@@ -35,13 +36,16 @@ export default function Article() {
   } = article || {};
 
   const category = categories.find((category) => category.id === categoryId);
+  const suggestedArticles = news?.filter(
+    (item) => item.categoryId === categoryId
+  );
 
   const imageSrc = serverUrl + src;
   const formatedDate = convertDateToArarbic(createdAt);
 
   return (
     <div className={styles.main} key={id}>
-      <Ad970x250 />
+      {/* <Ad970x250 /> */}
       <div className={styles.container}>
         <div className={styles.article}>
           <p className={styles.category}>
@@ -66,10 +70,19 @@ export default function Article() {
             className={styles.articleDetails}
             dangerouslySetInnerHTML={{ __html: content }}
           />
-          <Tags list={categories.slice(0, 3)} />
+
+          <Tags list={categories.slice(0, 6)} />
+
+          <SectionContainer title="مواضيع ذات صلة">
+            <div className={styles.section}>
+              {suggestedArticles?.slice(0, 3)?.map((article, index) => (
+                <ArticleWithBackground key={index} article={article} />
+              ))}
+            </div>
+          </SectionContainer>
         </div>
         <div className={`${styles.sections} ${styles.smallSection}`}>
-          <Ad300x250 />
+          {/* <Ad300x250 /> */}
           <SectionContainer title="الأكثر قراءة">
             <div style={{ display: "grid", gap: "16px" }}>
               {news?.slice(0, 10)?.map((article, index) => (
@@ -77,7 +90,7 @@ export default function Article() {
               ))}
             </div>
           </SectionContainer>
-          <Ad300x600 />
+          {/* <Ad300x600 /> */}
         </div>
       </div>
     </div>
