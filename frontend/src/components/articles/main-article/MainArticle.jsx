@@ -11,7 +11,7 @@ import { DataContext } from "../../../context/DataProvider";
 
 export default function MainArticle({
   article = {},
-  key = Math.random(),
+  // key = Math.random(),
   withoutImage = false,
   withoutDate = false,
 }) {
@@ -32,7 +32,7 @@ export default function MainArticle({
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = images?.includes(src) ? serverUrl + src : null;
+  const imageSrc = serverUrl + src;
   const displayedContent =
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
@@ -41,7 +41,7 @@ export default function MainArticle({
   };
 
   return (
-    <div key={id || key} className={styles.main}>
+    <div key={id} className={styles.main}>
       {!withoutImage &&
         (imageSrc ? (
           <img alt="" srcSet={srcset} className={styles.image} src={imageSrc} />

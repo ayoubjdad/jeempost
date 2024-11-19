@@ -17,7 +17,7 @@ export default function SideArticle({ index, article = {} }) {
   } = article || {};
 
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = images?.includes(src) ? serverUrl + src : null;
+  const imageSrc = serverUrl + src;
   const displayedContent = headline
     ? headline.slice(0, 56) + (headline.length > 56 ? "..." : "")
     : "";

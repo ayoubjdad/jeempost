@@ -25,7 +25,7 @@ export default function ArticleWithBackground({ article }) {
 
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = images?.includes(src) ? serverUrl + src : null;
+  const imageSrc = serverUrl + src;
 
   const onClick = () => {
     navigate(`/news/${linkDate}/${headline}`, { state: { id } });

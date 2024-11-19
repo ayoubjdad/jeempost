@@ -21,7 +21,7 @@ export default function SmallArticle({ index, article = {} }) {
     createdAt,
   } = article || {};
 
-  const imageSrc = images?.includes(src) ? serverUrl + src : null;
+  const imageSrc = serverUrl + src;
   const slicedHeadline =
     headline?.length <= 36 ? headline : headline?.slice(0, 36) + "...";
 
