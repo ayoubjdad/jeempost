@@ -4,7 +4,6 @@ import "./EditorOverrides.scss";
 import { Autocomplete, Box, Button, Switch, TextField } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { categories } from "../../data/Categories";
-import { useQuery } from "react-query";
 import { saveArticle } from "../../helpers/data.helpers";
 import {
   convertDateToArarbic,
@@ -57,22 +56,7 @@ const formats = [
   "direction",
 ];
 
-const fetchImages = async () => {
-  try {
-    const response = await axios.get(serverUrl + "/api/images");
-    return response.data.images;
-  } catch (error) {
-    console.error("Error fetching images:", error);
-  }
-};
-
 export default function Editor() {
-  const { data: images } = useQuery("images", fetchImages, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
-
   const defaultArticle = {
     id: String(Math.random() * 1000000),
     headline: "",
