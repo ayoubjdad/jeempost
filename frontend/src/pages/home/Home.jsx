@@ -105,7 +105,7 @@ const EconomySection = ({ economyList = [] }) => {
   if (!economyList?.length) return null;
 
   return (
-    <SectionContainer title="اقتصاد" readMore>
+    <SectionContainer title="اقتصاد" readMore categoryId={3}>
       <div className={styles.section}>
         {economyList?.slice(0, 6)?.map((article, index) => (
           <MainArticle key={index} article={article} />
@@ -119,7 +119,7 @@ const WorldSection = ({ worldList = [] }) => {
   if (!worldList?.length) return null;
 
   return (
-    <SectionContainer title="دولي" readMore>
+    <SectionContainer title="دولي" readMore categoryId={6}>
       <div className={styles.section}>
         {worldList?.slice(0, 6)?.map((article, index) => (
           <ArticleWithBackground key={index} article={article} />
@@ -133,7 +133,7 @@ const ArtSection = ({ artList = [] }) => {
   if (!artList?.length) return null;
 
   return (
-    <SectionContainer title="فن" readMore>
+    <SectionContainer title="فن" readMore categoryId={5}>
       <div className={styles.section}>
         {artList?.slice(0, 9)?.map((article, index) => (
           <SmallArticle index={index} article={article} withDescription />

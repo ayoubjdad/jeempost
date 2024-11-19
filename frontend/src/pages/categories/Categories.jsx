@@ -10,12 +10,15 @@ const Categories = ({ category }) => {
 
   const categoryData = categories.find((cat) => cat.slug === category);
 
-  const newsList = news?.filter((post) => post.categoryId === categoryData?.id);
+  let newsList = [...news];
+  if (category !== "آخر الأخبار") {
+    newsList = news?.filter((post) => post.categoryId === categoryData?.id);
+  }
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <SectionContainer title={categoryData.name} readMore>
+        <SectionContainer title={categoryData?.name || "آخر الأخبار"} readMore>
           <div
             className={styles.section}
             style={{

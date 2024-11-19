@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./SectionContainer.module.scss";
 import ReadMore from "../../components/read-more/ReadMore";
+import { useNavigate } from "react-router";
+import { CategoriesContext } from "../../context/CategoriesContext";
+import { categories } from "../../data/Categories";
 
 export default function SectionContainer({
   title,
   style,
   children,
   readMore = false,
-  onReadMore = () => {},
+  categoryId,
 }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const category = categories.find((category) => category.name === title);
+  const { setCategory } = useContext(CategoriesContext);
 
-  // const onClick = () => {
-  //   navigate(`/${category.slug}`);
-  // };
+  const onReadMore = () => {
+    if (categoryId) {
+      const category = categories.find(
+        (category) => category.id === categoryId
+      );
+      setCategory(category.slug);
+      navigate(`/${category.slug}`);
+    } else {
+      setCategory("آخر الأخبار");
+      navigate(`/آخر%20الأخبار`);
+    }
+  };
 
   return (
     <div className={styles.main} key={Math.random()}>
