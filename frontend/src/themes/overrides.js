@@ -194,5 +194,28 @@ export const theme = createTheme({
         },
       },
     },
+
+    // * Switch
+    MuiSwitch: {
+      styleOverrides: {
+        root: {
+          // padding: 8,
+        },
+        switchBase: {
+          color: "#040463",
+          "&.Mui-checked": {
+            color: "#040463",
+          },
+          "&.Mui-checked + .MuiSwitch-track": {
+            backgroundColor: "#020235",
+          },
+        },
+        track: {
+          backgroundColor: "gray",
+          opacity: 1,
+        },
+        thumb: {},
+      },
+    },
   },
 });

@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 import { DataContext } from "../../../context/DataProvider";
 
 export default function Edit() {
-  const { news } = useContext(DataContext);
+  const { news = [] } = useContext(DataContext);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
