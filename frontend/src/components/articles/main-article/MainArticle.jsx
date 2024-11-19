@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./MainArticle.module.scss";
 import { categories } from "../../../data/Categories";
 import {
@@ -7,17 +7,13 @@ import {
 } from "../../../helpers/global.helper";
 import { useNavigate } from "react-router";
 import { serverUrl } from "../../../api/config";
-import { DataContext } from "../../../context/DataProvider";
 
 export default function MainArticle({
   article = {},
-  // key = Math.random(),
   withoutImage = false,
   withoutDate = false,
 }) {
   const navigate = useNavigate();
-
-  const { images } = useContext(DataContext);
 
   const {
     id,
