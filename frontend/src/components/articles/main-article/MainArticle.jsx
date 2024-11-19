@@ -42,12 +42,15 @@ export default function MainArticle({
 
   return (
     <div key={id} className={styles.main}>
-      {!withoutImage &&
-        (imageSrc ? (
+      {
+        !withoutImage && (
+          // (imageSrc ? (
           <img alt="" srcSet={srcset} className={styles.image} src={imageSrc} />
-        ) : (
-          <div className={styles.noSourceImage}>لا توجد صورة</div>
-        ))}
+        )
+        // ) : (
+        //   <div className={styles.noSourceImage}>لا توجد صورة</div>
+        // ))
+      }
       {!withoutDate && createdAt && (
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <p className={styles.tag}>{category?.name}</p>|
