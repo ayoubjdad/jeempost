@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
         </div>
         <div className={styles.bottom}>
-          جميع الحقوق محفوظة لموقع الصحيفة © 2024
+          جميع الحقوق محفوظة لموقع جيم بوست © 2024
         </div>
       </div>
     </div>

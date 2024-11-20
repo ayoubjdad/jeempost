@@ -44,9 +44,10 @@
 }
 
 .smallSection {
-  height: fit-content;
-  display: flex;
   gap: 16px;
+  display: grid;
+  height: fit-content;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .middleSection {
