@@ -28,7 +28,7 @@ export default function Footer() {
             />
             <Box
               component="i"
-              onClick={() => redirect("https://web.facebook.com/")}
+              onClick={() => redirect("https://web.facebook.com/jeempost")}
               className={`fi fi-brands-instagram ${styles.icon}`}
             />
             <Box
