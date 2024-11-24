@@ -33,40 +33,37 @@ const isToday = (timestamp) => {
   return formatTimestampToDate(today) === formatTimestampToDate(gameDate);
 };
 
-const filterGamesByPriority = (games, gamesToShow) => {
-  try {
-    const prioritizedGames = [];
-    const nonPrioritizedGames = new Set();
+const filterGamesByPriority = (games = [], gamesToShow) => {
+  const priorityIds = tournamentsPriority.map((tour) => tour.id);
+  const skipIds = teamsToSkip.map((team) => team.id);
 
-    const priorityIds = new Set(tournamentsPriority.map((tour) => tour.id));
-    const skipIds = new Set(teamsToSkip.map((tour) => tour.id));
+  const gamesList = [];
+  games.forEach((game) => {
+    if (
+      // * Skip games that are not today
+      !isToday(game.startTimestamp) ||
+      // * Skip games involving teams to skip
+      skipIds.includes(game.awayTeam.id) ||
+      skipIds.includes(game.homeTeam.id)
+    )
+      return;
 
-    for (const game of games) {
-      if (!isToday(game.startTimestamp)) continue; // Skip non-today games
-
-      if (!skipIds.has(game.awayTeam.id) && !skipIds.has(game.homeTeam.id)) {
-        if (priorityIds.has(game.tournament.uniqueTournament.id)) {
-          if (prioritizedGames.length < gamesToShow) {
-            prioritizedGames.push(game);
-          }
-        } else if (
-          nonPrioritizedGames.size <
-          gamesToShow - prioritizedGames.length
-        ) {
-          nonPrioritizedGames.add(game);
-        }
+    priorityIds.forEach((priorityId) => {
+      if (priorityId === game.tournament.uniqueTournament.id) {
+        gamesList.push(game);
       }
+    });
+  });
 
-      if (prioritizedGames.length + nonPrioritizedGames.size >= gamesToShow) {
-        break;
-      }
-    }
+  const filteredArray = [];
+  priorityIds.forEach((id) => {
+    const gamesInThisLeague = gamesList.filter(
+      (game) => game.tournament.uniqueTournament.id === id
+    );
+    gamesInThisLeague.forEach((game) => filteredArray.push(game));
+  });
 
-    return [...prioritizedGames, ...nonPrioritizedGames];
-  } catch (error) {
-    console.error("❌", error);
-    return [];
-  }
+  return filteredArray.slice(0, gamesToShow) || [];
 };
 
 const fetchGames = async (gamesToShow) => {
@@ -99,7 +96,7 @@ export default function Sports({ articles }) {
           style={{ gap: "32px", display: "grid" }}
         >
           <div className={styles.games}>
-            {games?.slice(0, gamesToShow)?.map((game) => (
+            {games.map((game) => (
               <Game game={game} />
             ))}
           </div>

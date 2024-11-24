@@ -50,11 +50,11 @@ export const tournamentsPriority = [
 ];
 
 export const topTeams = [
-  { name: "Wydad AC", id: 1 },
-  { name: "Raja CA", id: 2 },
-  { name: "FUS Rabat", id: 3 },
-  { name: "RS Berkane", id: 4 },
-  { name: "AS FAR", id: 5 },
+  { name: "Wydad AC", id: 36268 },
+  { name: "Raja CA", id: 41757 },
+  { name: "FUS Rabat", id: 55027 },
+  { name: "RS Berkane", id: 80395 },
+  { name: "AS FAR", id: 24394 },
   {
     name: "Liverpool",
     id: 44,
