@@ -1,91 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Sports.module.scss";
 import SectionContainer from "../section-container/SectionContainer";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { gamesUrl } from "../../api/data";
 import Game from "../../components/games/game/Game";
 import MainArticle from "../../components/articles/main-article/MainArticle";
 import Standings from "./standings/Standings";
-import { teamsToSkip, tournamentsPriority } from "../../data/Tournaments";
-
-const options = {
-  refetchOnWindowFocus: false,
-  refetchOnMount: false,
-  retry: false,
-};
-
-const formatDate = (date) => {
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${year}-${month}-${day}`;
-};
-
-const formatTimestampToDate = (date) =>
-  `${String(date.getDate()).padStart(2, "0")}-${String(
-    date.getMonth() + 1
-  ).padStart(2, "0")}-${date.getFullYear()}`;
-
-const isToday = (timestamp) => {
-  const today = new Date();
-  const gameDate = new Date(timestamp * 1000);
-  return formatTimestampToDate(today) === formatTimestampToDate(gameDate);
-};
-
-const filterGamesByPriority = (games = [], gamesToShow) => {
-  const priorityIds = tournamentsPriority.map((tour) => tour.id);
-  const skipIds = teamsToSkip.map((team) => team.id);
-
-  const gamesList = [];
-  games.forEach((game) => {
-    if (
-      // * Skip games that are not today
-      !isToday(game.startTimestamp) ||
-      // * Skip games involving teams to skip
-      skipIds.includes(game.awayTeam.id) ||
-      skipIds.includes(game.homeTeam.id)
-    )
-      return;
-
-    priorityIds.forEach((priorityId) => {
-      if (priorityId === game.tournament.uniqueTournament.id) {
-        gamesList.push(game);
-      }
-    });
-  });
-
-  const filteredArray = [];
-  priorityIds.forEach((id) => {
-    const gamesInThisLeague = gamesList.filter(
-      (game) => game.tournament.uniqueTournament.id === id
-    );
-    gamesInThisLeague.forEach((game) => filteredArray.push(game));
-  });
-
-  return filteredArray.slice(0, gamesToShow) || [];
-};
-
-const fetchGames = async (gamesToShow) => {
-  try {
-    const url = gamesUrl + formatDate(new Date(Date.now()));
-    const response = await axios.get(url);
-
-    return filterGamesByPriority(response?.data?.events, gamesToShow);
-  } catch (error) {
-    console.error("❌", error);
-    return {};
-  }
-};
+import { DataContext } from "../../context/DataProvider";
 
 export default function Sports({ articles }) {
-  const gamesToShow = 6;
-
-  const { data: games = [] } = useQuery(
-    "games",
-    () => fetchGames(gamesToShow),
-    options
-  );
+  const { games } = useContext(DataContext);
 
   return (
     <div className={styles.main}>

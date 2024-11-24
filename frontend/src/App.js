@@ -20,12 +20,17 @@ import Login from "./pages/login/Login";
 import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 import { UserContext } from "./context/UserProvider";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
+import { DataContext } from "./context/DataProvider";
+import Loader from "./layouts/loader/Loader";
 
 export default function App() {
   const queryClient = new QueryClient();
   const { category } = useContext(CategoriesContext);
+  const { fetched } = useContext(DataContext);
 
-  return (
+  return !fetched ? (
+    <Loader />
+  ) : (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
