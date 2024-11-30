@@ -10,6 +10,7 @@ const newsSchema = new mongoose.Schema(
     visibility: String,
     isHighlight: Boolean,
     image: {
+      url: String,
       src: String,
       srcset: String,
     },
