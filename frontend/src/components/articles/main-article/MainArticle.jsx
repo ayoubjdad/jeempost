@@ -17,7 +17,8 @@ export default function MainArticle({
 
   const {
     id,
-    image: { src, srcset } = {},
+    url: articleUrl,
+    image: { url, src, srcset } = {},
     headline,
     categoryId,
     content,
@@ -29,13 +30,14 @@ export default function MainArticle({
   const formatedDate = convertDateToArarbic(createdAt);
   const linkDate = newsFormatDate(createdAt);
   // const imageSrc = serverUrl + src;
-  const imageSrc = new URL(src, serverUrl).href;
+  const imageSrc = url || new URL(src, serverUrl).href;
 
   const displayedContent =
     content?.slice(0, 100).replaceAll("<p>", "").replaceAll("</p>", "") + "...";
 
   const onClick = () => {
-    navigate(`/news/${linkDate}/${headline}`, { state: { id } });
+    navigate(articleUrl);
+    // `/news/${linkDate}/${headline}`, { state: { id } });
   };
 
   return (

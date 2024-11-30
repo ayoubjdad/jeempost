@@ -11,13 +11,13 @@ export default function SideArticle({ index, article = {} }) {
 
   const {
     id,
-    image: { src, srcset } = {},
+    image: { url, src, srcset } = {},
     headline,
     createdAt,
   } = article || {};
 
   const linkDate = newsFormatDate(createdAt);
-  const imageSrc = serverUrl + src;
+  const imageSrc = url || serverUrl + src;
   const displayedContent = headline
     ? headline.slice(0, 56) + (headline.length > 56 ? "..." : "")
     : "";

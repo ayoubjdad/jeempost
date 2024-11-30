@@ -65,7 +65,7 @@ export default function Editor() {
     content: "",
     isHighlight: false,
     visibility: "منشور",
-    image: { src: "", srcset: "" },
+    image: { src: "", srcset: "", url: "" },
     url: "",
     author: { name: "جيم بوست", profileUrl: "" },
     location: "",
@@ -75,37 +75,36 @@ export default function Editor() {
   };
 
   const [article, setArticle] = useState(defaultArticle);
-  const [imageUrl, setImageUrl] = useState(null);
   const [content, setContent] = useState("");
 
   // Function to handle file upload input
-  const handleUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const url = await uploadImage(file);
-      setImageUrl(url);
-    }
-  };
+  // const handleUpload = async (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const url = await uploadImage(file);
+  //     setImageUrl(url);
+  //   }
+  // };
 
   // Function to upload the image to the server and get the URL
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
+  // const uploadImage = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("image", file);
 
-    try {
-      const response = await axios.post(
-        serverUrl + "/api/upload/image",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      return response.data.imageUrl;
-    } catch (error) {
-      console.error("❌ Error uploading image:", error);
-      return null;
-    }
-  };
+  //   try {
+  //     const response = await axios.post(
+  //       serverUrl + "/api/upload/image",
+  //       formData,
+  //       {
+  //         headers: { "Content-Type": "multipart/form-data" },
+  //       }
+  //     );
+  //     return response.data.imageUrl;
+  //   } catch (error) {
+  //     console.error("❌ Error uploading image:", error);
+  //     return null;
+  //   }
+  // };
 
   const onChange = (key, e) => {
     try {
@@ -136,19 +135,18 @@ export default function Editor() {
   const handleSave = async () => {
     try {
       const today = convertTimestampToDate(Date.now());
+      const articleHeadline = article.headline.replaceAll(" ", "-");
 
       const newArticle = {
         ...article,
-        url: `/news/${today}/${article.headline}`,
+        url: `/news/${today}/${articleHeadline}`,
         content,
-        image: { ...article.image, src: imageUrl }, // Store only the URL of the uploaded image
       };
 
       await saveArticle(newArticle);
       alert("تم نشر المقال");
       setArticle({ ...defaultArticle });
       setContent("");
-      setImageUrl(null); // Reset the image file after saving
     } catch (error) {
       console.error("❌ Error in handleSave:", error);
     }
@@ -230,7 +228,7 @@ export default function Editor() {
 
             <div className={styles.param}>
               <p>الصورة</p>
-              <div className={styles.upload}>
+              {/* <div className={styles.upload}>
                 <label htmlFor="upload-button" className={styles.uploadLabel}>
                   <span>حمل صورة</span>
                   <Box component="i" className="fi fi-rr-cloud-upload" />
@@ -243,14 +241,25 @@ export default function Editor() {
                   style={{ display: "none" }}
                   onChange={handleUpload}
                 />
-              </div>
+              </div> */}
+              <TextField
+                variant="outlined"
+                placeholder="الصورة"
+                defaultValue={article?.image?.url}
+                onBlur={(e) =>
+                  setArticle((prev) => ({
+                    ...prev,
+                    image: { ...prev.image, url: e.target.value },
+                  }))
+                }
+              />
             </div>
 
             <div className={styles.param}>
               <p></p>
-              {imageUrl && (
+              {article?.image?.url && (
                 <div className={styles.imagePreview}>
-                  <img src={serverUrl + imageUrl} alt="Preview" width="100" />
+                  <img src={article.image.url} alt="Preview" width="100" />
                 </div>
               )}
             </div>

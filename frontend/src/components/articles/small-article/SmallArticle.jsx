@@ -14,14 +14,14 @@ export default function SmallArticle({ index, article = {} }) {
 
   const {
     id,
-    image: { src, srcset } = {},
+    image: { url, src, srcset } = {},
     headline,
     categoryId,
     content,
     createdAt,
   } = article || {};
 
-  const imageSrc = serverUrl + src;
+  const imageSrc = url || serverUrl + src;
   const slicedHeadline =
     headline?.length <= 36 ? headline : headline?.slice(0, 36) + "...";
 
