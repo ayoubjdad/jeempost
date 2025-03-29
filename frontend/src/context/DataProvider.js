@@ -7,7 +7,7 @@ import axios from "axios";
 
 export const DataContext = createContext();
 
-const options = {
+export const options = {
   refetchOnWindowFocus: false,
   refetchOnMount: false,
   retry: false,

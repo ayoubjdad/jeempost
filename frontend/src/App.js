@@ -22,15 +22,18 @@ import { UserContext } from "./context/UserProvider";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 import { DataContext } from "./context/DataProvider";
 import Loader from "./layouts/loader/Loader";
+import Data from "./pages/home/Data";
 
 export default function App() {
   const queryClient = new QueryClient();
   const { category } = useContext(CategoriesContext);
   const { fetched } = useContext(DataContext);
 
-  return !fetched ? (
-    <Loader />
-  ) : (
+  // return
+  //  !fetched ? (
+  //   <Loader />
+  // ) : (
+  return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
@@ -38,7 +41,8 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route element={<MainLayout />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Data />} />
+              {/* <Route path="/" element={<Home />} /> */}
               <Route path="/news/:linkDate/:headline" element={<Article />} />
               <Route path="/admin/news/add-new" element={<Editor />} />
               {/* <Route
@@ -61,11 +65,11 @@ export default function App() {
 function MainLayout() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

@@ -26,7 +26,7 @@ export default function Article() {
   const article = news?.find((article) => article.id === id);
 
   const {
-    image: { src, srcset } = {}, // Fallback to an empty object if image is undefined
+    image: { src, url, srcset } = {}, // Fallback to an empty object if image is undefined
     author: { name = "جيم بوست" } = {}, // Fallback to an empty object if author is undefined
     headline,
     categoryId,
@@ -40,7 +40,7 @@ export default function Article() {
     (item) => item.categoryId === categoryId
   );
 
-  const imageSrc = serverUrl + src;
+  const imageSrc = url || serverUrl + src;
   const formatedDate = convertDateToArarbic(createdAt);
 
   return (

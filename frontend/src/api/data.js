@@ -14,3 +14,6 @@ export const standingsUrls = [
 const teamLogo = "https://api.sofascore.app/api/v1/team/${team.id}/image";
 const tournamentLogo =
   "https://api.sofascore.app/api/v1/unique-tournament/${id}/image/dark";
+
+export const team = "https://www.sofascore.com/api/v1/team/";
+// https://www.sofascore.com/api/v1/team/3145/players
