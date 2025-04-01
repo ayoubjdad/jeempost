@@ -5,7 +5,7 @@ import { gamesUrl } from "../../api/data";
 import { gamesFormatDate } from "../../helpers/global.helper";
 import { options } from "../../context/DataProvider";
 import styles from "./Data.module.scss";
-import { tournamentsPriority } from "../../data/Tournaments";
+import { topTeams, tournamentsPriority } from "../../data/Tournaments";
 import Loader from "../../layouts/loader/Loader";
 import { Box } from "@mui/material";
 
@@ -26,17 +26,17 @@ const fetchGames = async (date) => {
   }
 };
 
-const fetchSubscriptions = async () => {
-  try {
-    const response = await axios.get(
-      "https://www.sofascore.com/api/v1/user-account/5fa5714a4dd06b2ec8e118e1/subscriptions"
-    );
-    return response?.data?.subscriptions || {};
-  } catch (error) {
-    console.error("❌ Error fetching subscriptions:", error);
-    return [];
-  }
-};
+// const fetchSubscriptions = async () => {
+//   try {
+//     const response = await axios.get(
+//       "https://www.sofascore.com/api/v1/user-account/5fa5714a4dd06b2ec8e118e1/subscriptions"
+//     );
+//     return response?.data?.subscriptions || {};
+//   } catch (error) {
+//     console.error("❌ Error fetching subscriptions:", error);
+//     return [];
+//   }
+// };
 
 const fetchTeamPlayers = async (teamId) => {
   try {
@@ -79,26 +79,33 @@ export default function Data() {
     options
   );
 
-  const { data: subscriptions = {}, isLoading: subscriptionsLoading } =
-    useQuery("subscriptions", fetchSubscriptions);
-
-  const { leagues = [], teams = [] } = subscriptions;
-
   // Derive highlighted games
   const highlightedGames = useMemo(() => {
-    const tournaments = leagues?.length ? leagues : tournamentsPriority;
     const filteredGames = games.filter(
       (game) =>
-        tournaments.some((t) => t.id === game.tournament.uniqueTournament.id) &&
-        isToday(date, game.startTimestamp)
+        tournamentsPriority.some(
+          (t) => t.id === game.tournament.uniqueTournament.id
+        ) && isToday(date, game.startTimestamp)
     );
-    return filteredGames.filter((game) =>
-      teams.some(
-        (team) =>
-          team.name === game.awayTeam.name || team.name === game.homeTeam.name
-      )
+    return filteredGames.sort(
+      (a, b) =>
+        a.tournament.uniqueTournament.id - b.tournament.uniqueTournament.id
     );
-  }, [games, leagues]);
+    //  filteredGames.filter((game) =>
+    //   topTeams.some(
+    //     (team) => team.id === game.awayTeam.id || team.id === game.homeTeam.id
+    //   )
+    // );
+  }, [games]);
+
+  console.log(
+    ":::::: ~ id:",
+    tournamentsPriority.map(({ id, name, fieldTranslations }) => ({
+      id,
+      name,
+      fieldTranslations,
+    }))
+  );
 
   // Fetch player data only once for all games
   const { data: enrichedGames = [], isLoading: playersLoading } = useQuery(
@@ -158,8 +165,6 @@ export default function Data() {
     };
   }, [enrichedGames]);
 
-  console.log(":::::: ~ internationalPlayers:", internationalPlayers);
-
   const timeString = (timestamp) => {
     const startTime = new Date(timestamp * 1000);
     return startTime.toLocaleTimeString("en-GB", {
@@ -168,7 +173,7 @@ export default function Data() {
     });
   };
 
-  if (gamesLoading || subscriptionsLoading || playersLoading) {
+  if (gamesLoading || playersLoading) {
     return <Loader />;
   }
 
@@ -203,17 +208,7 @@ export default function Data() {
       <div className={styles.container}>
         {internationalPlayers.map((game) => (
           <div key={game.id} className={styles.card}>
-            <div className={styles.matchHeader}>
-              <Team team={game.homeTeam.team} />
-              <div className={styles.time}>
-                <img
-                  src={`https://img.sofascore.com/api/v1/unique-tournament/${game?.game?.tournament?.uniqueTournament?.id}/image`}
-                  alt={game?.game?.tournament?.uniqueTournament?.name}
-                />
-                <h5>{timeString(game.game.startTimestamp)}</h5>
-              </div>
-              <Team team={game.awayTeam.team} />
-            </div>
+            <GameCard game={game.game} />
 
             <div className={styles.moroccanPlayers}>
               {game.moroccanPlayers.map(renderPlayerCard)}
@@ -226,18 +221,7 @@ export default function Data() {
       <div className={styles.container}>
         {moroccanPlayers.map((game) => (
           <div key={game.id} className={styles.card}>
-            <div className={styles.matchHeader}>
-              <Team team={game.homeTeam.team} />
-              <div className={styles.time}>
-                <img
-                  src={`https://img.sofascore.com/api/v1/unique-tournament/${game?.game?.tournament?.uniqueTournament?.id}/image`}
-                  alt={game?.game?.tournament?.uniqueTournament?.name}
-                />
-                <h5>{timeString(game.game.startTimestamp)}</h5>
-              </div>
-              <Team team={game.awayTeam.team} />
-            </div>
-
+            <GameCard game={game.game} />
             <div className={styles.moroccanPlayers}>
               {game.moroccanPlayers.map(renderPlayerCard)}
             </div>
@@ -261,6 +245,36 @@ const Team = ({ team, fromGame = false }) => (
     </p>
   </div>
 );
+
+const GameCard = ({ game }) => {
+  const timeString = (timestamp) => {
+    const startTime = new Date(timestamp * 1000);
+    return startTime.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const tournamentImage = `https://img.sofascore.com/api/v1/unique-tournament/${game?.tournament?.uniqueTournament?.id}/image`;
+  const score =
+    game.status.type === "finished"
+      ? `${game.homeScore.display} - ${game.awayScore.display}`
+      : timeString(game.startTimestamp);
+
+  return (
+    <div className={styles.matchHeader}>
+      <Team team={game.homeTeam} />
+      <div className={styles.time}>
+        <img
+          src={tournamentImage}
+          alt={game?.tournament?.uniqueTournament?.name}
+        />
+        <h5>{score}</h5>
+      </div>
+      <Team team={game.awayTeam} />
+    </div>
+  );
+};
 
 const DatePicker = ({ date, setDate }) => {
   const dateString = gamesFormatDate(date).split("-");
