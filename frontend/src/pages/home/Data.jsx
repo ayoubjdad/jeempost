@@ -87,25 +87,18 @@ export default function Data() {
           (t) => t.id === game.tournament.uniqueTournament.id
         ) && isToday(date, game.startTimestamp)
     );
-    return filteredGames.sort(
+
+    const filtered = filteredGames.filter((game) =>
+      topTeams.some(
+        (team) => team.id === game.awayTeam.id || team.id === game.homeTeam.id
+      )
+    );
+
+    return filtered.sort(
       (a, b) =>
         a.tournament.uniqueTournament.id - b.tournament.uniqueTournament.id
     );
-    //  filteredGames.filter((game) =>
-    //   topTeams.some(
-    //     (team) => team.id === game.awayTeam.id || team.id === game.homeTeam.id
-    //   )
-    // );
   }, [games]);
-
-  console.log(
-    ":::::: ~ id:",
-    tournamentsPriority.map(({ id, name, fieldTranslations }) => ({
-      id,
-      name,
-      fieldTranslations,
-    }))
-  );
 
   // Fetch player data only once for all games
   const { data: enrichedGames = [], isLoading: playersLoading } = useQuery(

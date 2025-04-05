@@ -104,10 +104,17 @@ export const tournamentsPriority = [
 ];
 
 export const topTeams = [
+  // * Saudi Arabia
+  { name: "Al-Hilal", id: 21895 },
+  { name: "Al-Nassr", id: 23400 },
+  { name: "Al-Ittihad", id: 34315 },
+  { name: "Al-Ahli", id: 34469 },
+
   // * Brazil
-  { name: "Palmeiras", id: 46 },
-  { name: "Flamengo", id: 47 },
-  { name: "Corinthians", id: 48 },
+  { name: "Palmeiras", id: 1963 },
+  { name: "Flamengo", id: 5981 },
+  { name: "Corinthians", id: 1957 },
+  { name: "Atlético Mineiro", id: 1977 },
 
   // * Morocco
   { name: "Wydad AC", id: 36268 },
@@ -117,10 +124,10 @@ export const topTeams = [
   { name: "AS FAR", id: 24394 },
 
   // * Germany
-  { name: "Bayern Munich", id: 21 },
-  { name: "Borussia Dortmund", id: 22 },
-  { name: "RB Leipzig", id: 23 },
-  { name: "Bayer Leverkusen", id: 24 },
+  { name: "Bayern Munich", id: 2672 },
+  { name: "Borussia Dortmund", id: 2673 },
+  // { name: "RB Leipzig", id: 36360 },
+  { name: "Bayer Leverkusen", id: 2681 },
 
   // * France
   { id: 1644, name: "Paris Saint-Germain" },
